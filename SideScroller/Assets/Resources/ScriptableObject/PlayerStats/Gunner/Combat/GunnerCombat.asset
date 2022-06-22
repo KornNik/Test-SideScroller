@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745ac663593c1634ea4500df6bd551d8, type: 3}
+  m_Name: GunnerCombat
+  m_EditorClassIdentifier: 
+  _speed: {fileID: 11400000, guid: 0631a8563b444c9478ce102918dced0d, type: 2}
+  _rechargeTime: {fileID: 11400000, guid: 5bc3334c1ca06bf4186ef978646143d1, type: 2}

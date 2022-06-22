@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745ac663593c1634ea4500df6bd551d8, type: 3}
+  m_Name: BanditCombatParameters
+  m_EditorClassIdentifier: 
+  _damage: {fileID: 11400000, guid: a00661ac7c195a843833eeee0343e4e3, type: 2}
+  _speed: {fileID: 11400000, guid: c9b1f9cd6ee23de4bb6fbb80248e925c, type: 2}
+  _rechargeTime: {fileID: 11400000, guid: 06abba8341239604283aa9e198652ba9, type: 2}
