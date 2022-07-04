@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: LevelForestParameters
   m_EditorClassIdentifier: 
   _enemyCount: 4
-  _enemyTypesArray: 02000000020000000200000002000000
+  _NPCTypesArray: 02000000020000000200000002000000
+  _NPCPositions:
+  - {x: 27.956673, y: -0.4220119, z: 0}
+  - {x: 16.916674, y: -0.4020119, z: 0}
+  - {x: 22.936674, y: -0.4220119, z: 0}
+  - {x: 7.646673, y: -0.4800119, z: 0}

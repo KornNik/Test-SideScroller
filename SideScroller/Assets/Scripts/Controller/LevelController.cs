@@ -1,19 +1,18 @@
 ﻿using System;
 using UnityEngine;
 using SideScroller.Helpers;
-using SideScroller.Helpers.AssetsPath;
+using SideScroller.Model.Unit;
 using SideScroller.Helpers.Types;
 using SideScroller.Model.CameraBeh;
-using SideScroller.Model.Unit;
 using SideScroller.Model.LevelModel;
+using SideScroller.Helpers.Services;
+using SideScroller.Helpers.AssetsPath;
 
 namespace SideScroller.Controller
 {
     class LevelController
     {
         #region Fields
-
-        public static event Action<BasePlayerCharacter> OnPlayerLoaded;
 
         private Level _level;
         private CameraBehaviour _playerCamera;
@@ -31,40 +30,31 @@ namespace SideScroller.Controller
         #endregion
 
 
-        #region UnityMethods
-
-        public LevelController()
-        {
-
-        }
-
-        #endregion
-
-
         #region Methods
 
-        public Level LoadLevel(LevelTypes levelType)
+        public void  LoadLevel(LevelTypes levelType)
         {
             var resources = CustomResources.Load<Level>(LevelsAssetPath.LevelsPath[levelType]);
             _level = UnityEngine.Object.Instantiate(resources, Vector3.zero, Quaternion.identity);
-
-            return _level;
         }
-        public BasePlayerCharacter LoadPlayer(PlayerCharacterTypes playerType)
+        public void LoadPlayer(PlayerCharacterTypes playerType)
         {
             _playerCharacter = new PlayerLoader().CreateHero(playerType).WithWeapon(WeaponType.Sword);
-            OnPlayerLoaded?.Invoke(_playerCharacter);
-            return _playerCharacter;
+            Services.Instance.PlayerService.SetPlayer(_playerCharacter);
+            _playerCamera.SetPlayer(_playerCharacter);
         }
-        public CameraBehaviour LoadCamera(CameraTypes cameraType)
+        public void LoadCamera(CameraTypes cameraType)
         {
             var resources = CustomResources.Load<CameraBehaviour>(CamerasAssetPath.CamerasPath[cameraType]);
             _playerCamera = UnityEngine.Object.Instantiate(resources, Vector3.zero, Quaternion.identity);
-            return _playerCamera;
         }
-        public BaseNPC LoadEnemy(NPCTypes NPCType, Vector3 position)
+        public void LoadNPC()
         {
-            return new NPCLoader().CreateNPC(NPCType).WithWeapon(WeaponType.Sword).WithStartPosition(position);
+            for (int i = 0; i < _level.LevelData.NPCTypesArray.Length; i++)
+            {
+                _level.NPCList.Add(new NPCLoader().CreateNPC(_level.LevelData.NPCTypesArray[i])
+                    .WithWeapon(WeaponType.Sword).WithStartPosition(_level.LevelData.NPCPositions[i]));
+            }
         }
 
         #endregion

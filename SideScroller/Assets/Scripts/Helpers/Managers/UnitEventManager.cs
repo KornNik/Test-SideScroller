@@ -16,6 +16,8 @@ namespace SideScroller.Helpers.Managers
         public Action<bool> WeaponOut;
         public Action<float> MovingSpeed;
 
+        public Action<float> HealthChanged;
+
         #endregion
 
     }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5030acff874af0449c8339a9a1fed74, type: 3}
   m_Name: BanditAI
   m_EditorClassIdentifier: 
-  _distanceView: 5
-  _stopingDistance: 0.5
+  _distanceView: 2.63
+  _stopingDistance: 0.35
   _patrolDistance: 2

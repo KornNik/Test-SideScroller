@@ -2,7 +2,6 @@
 using SideScroller.UI;
 using SideScroller.UI.Types;
 using SideScroller.Helpers.Types;
-using SideScroller.Model.Unit;
 
 namespace SideScroller.Controller
 {
@@ -53,24 +52,15 @@ namespace SideScroller.Controller
 
         private void Load()
         {
-            _levelController.LoadLevel(_levelType);
             _levelController.LoadCamera(_cameraType);
-            LoadNPC();
+            _levelController.LoadLevel(_levelType);
+            _levelController.LoadNPC();
         }
 
         private void LoadPlayer(PlayerCharacterTypes playerCharacterTypes)
         {
             _levelController.LoadPlayer(playerCharacterTypes);
-            ScreenInterface.GetInstance().Execute(ScreenTypes.GameMenu);
-        }
-        private void LoadNPC()
-        {
-            for (int i = 0; i < _levelController.Level.LevelData.EnemyTypesArray.Length; i++)
-            {
-                var NPC = _levelController.LoadEnemy(_levelController.Level.LevelData.EnemyTypesArray[i],
-                    _levelController.Level.EnemiesSpawnTransform[i].position);
-                _levelController.Level.NPCList.Add(NPC);
-            }
+            ScreenInterface.GetInstance().Execute(ScreenTypes.InventoryMenu);
         }
         #endregion
     }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using SideScroller.Data.Item;
 using SideScroller.Helpers.Pool;
 using SideScroller.Helpers.Types;
 

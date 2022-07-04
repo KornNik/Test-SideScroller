@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using SideScroller.UI.Parts;
+using SideScroller.Model.Unit;
+using SideScroller.Helpers.Services;
 
 namespace SideScroller.UI
 {
@@ -9,6 +11,7 @@ namespace SideScroller.UI
     {
         #region Fields
 
+        [SerializeField] private HealthBar _healthBar;
         [SerializeField] private ControlButton _jumpButton;
         [SerializeField] private ControlButton _attackButton;
         [SerializeField] private ControlButton _leftArrow;
@@ -20,13 +23,19 @@ namespace SideScroller.UI
         public static UnityAction Jump;
         public static UnityAction Attack;
         public static UnityAction Interact;
-        public static UnityAction LeftArrow;
-        public static UnityAction RightArrow;
+
+        public static UnityAction<bool> LeftArrowBool;
+        public static UnityAction<bool> RightArrowBool;
 
         #endregion
 
 
         #region UnityMethods
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
 
         private void OnEnable()
         {
@@ -34,10 +43,16 @@ namespace SideScroller.UI
             _attackButton.onClick.AddListener(OnAttackClick);
             _interactButton.onClick.AddListener(OnInteracteClick);
 
-            _leftArrow.ButtonPress += OnLeftArrowButtonDown;
-            _rightArrow.ButtonPress += OnRightArrowButtonDown;
+            _leftArrow.IsButtonPressed += OnLeftArrowButtonDownBool;
+            _rightArrow.IsButtonPressed += OnRightArrowButtonDownBool;
 
             _inventoryButton.onClick.AddListener(OnInventoryButtonDown);
+
+            if(Services.Instance.PlayerService.PlayerCharacter is BaseUnit)
+            {
+                _healthBar.SetUnit(Services.Instance.PlayerService.PlayerCharacter);
+            }
+
         }
 
         private void OnDisable()
@@ -46,28 +61,30 @@ namespace SideScroller.UI
             _attackButton.onClick.RemoveListener(OnAttackClick);
             _interactButton.onClick.RemoveListener(OnInteracteClick);
 
-            _leftArrow.ButtonPress -= OnLeftArrowButtonDown;
-            _rightArrow.ButtonPress -= OnRightArrowButtonDown;
+            _leftArrow.IsButtonPressed -= OnLeftArrowButtonDownBool;
+            _rightArrow.IsButtonPressed -= OnRightArrowButtonDownBool;
 
             _inventoryButton.onClick.RemoveListener(OnInventoryButtonDown);
+
         }
 
         #endregion
 
 
         #region Methods
+
         private void OnInventoryButtonDown()
         {
             ScreenInterface.GetInstance().Execute(Types.ScreenTypes.InventoryMenu);
         }
 
-        private void OnLeftArrowButtonDown()
+        private void OnLeftArrowButtonDownBool(bool isPress)
         {
-            LeftArrow?.Invoke();
+            LeftArrowBool?.Invoke(isPress);
         }
-        private void OnRightArrowButtonDown()
+        private void OnRightArrowButtonDownBool(bool isPress)
         {
-            RightArrow?.Invoke();
+            RightArrowBool?.Invoke(isPress);
         }
         private void OnInteracteClick()
         {

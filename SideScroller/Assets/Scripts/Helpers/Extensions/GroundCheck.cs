@@ -8,16 +8,7 @@ namespace SideScroller.Helpers.Extensions
     {
         #region MyRegion
 
-        protected BaseUnit _unit;
-
-        protected bool _isGrounded;
-
-        #endregion
-
-
-        #region Properties
-
-        public bool IsGrounded => _isGrounded;
+        private BaseUnit _unit;
 
         #endregion
 
@@ -34,17 +25,17 @@ namespace SideScroller.Helpers.Extensions
 
         #region MyRegion
 
-        public void LandingCheck()
+        public void LandingCheck(Vector3 groundCheckColliderPosition)
         {
-            if (Physics2D.Raycast(_unit.GroundCheckCollider.transform.position, Vector2.down, 0.01f, LayersManager.Ground))
+            if (Physics2D.Raycast(groundCheckColliderPosition, Vector2.down, 0.01f, LayersManager.Ground))
             {
-                _isGrounded = true;
-                _unit.UnitEventManager.Grounded?.Invoke(_isGrounded);
+                _unit.UnitBoolStates.IsGrounded = true;
+                _unit.UnitEventManager.Grounded?.Invoke(_unit.UnitBoolStates.IsGrounded);
             }
             else
             {
-                _isGrounded = false;
-                _unit.UnitEventManager.Grounded?.Invoke(_isGrounded);
+                _unit.UnitBoolStates.IsGrounded = false;
+                _unit.UnitEventManager.Grounded?.Invoke(_unit.UnitBoolStates.IsGrounded);
             }
         }
 

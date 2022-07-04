@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using SideScroller.Data.Item;
-
-namespace SideScroller.Model.Item
+﻿namespace SideScroller.Model.Item
 {
     class CommonMeeleWeapon : Weapon
     {

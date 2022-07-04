@@ -15,3 +15,5 @@ MonoBehaviour:
   _movingSpeed: {fileID: 11400000, guid: c6e112ded6ed1214c9ddd82245d40d86, type: 2}
   _jumpHeight: {fileID: 11400000, guid: fee92bc8275e27d4796b2f644b376d70, type: 2}
   _runningSpeed: {fileID: 11400000, guid: e398429db775b3341bbb3259a27b77ed, type: 2}
+  _inAirSpeedMovementMultiplier: 0.4
+  _jumpingDirectionMovementMultiplier: 0.8

@@ -24,8 +24,9 @@ namespace SideScroller.Controller
             GameMenu.Jump += Jump;
             GameMenu.Attack += Attack;
             GameMenu.Interact += Interacte;
-            GameMenu.LeftArrow += MoveLeft;
-            GameMenu.RightArrow += MoveRight;
+
+            GameMenu.LeftArrowBool += MoveLeftBool;
+            GameMenu.RightArrowBool += MoveRightBool;
         }
 
         private void OnDisable()
@@ -33,8 +34,9 @@ namespace SideScroller.Controller
             GameMenu.Jump -= Jump;
             GameMenu.Attack -= Attack;
             GameMenu.Interact -= Interacte;
-            GameMenu.LeftArrow -= MoveLeft;
-            GameMenu.RightArrow -= MoveRight;
+
+            GameMenu.LeftArrowBool -= MoveLeftBool;
+            GameMenu.RightArrowBool -= MoveRightBool;
         }
 
         private void Awake()
@@ -46,28 +48,19 @@ namespace SideScroller.Controller
 
         private void FixedUpdate()
         {
-            if (!_isActive) return;
-
+#if UNITY_EDITOR
             Vector2 inputAxis;
             inputAxis.x = Input.GetAxis(AxisManager.HORIZONTAL);
 
-            _player.Movement.Move(inputAxis.x);
-
-            //if (Input.GetKeyDown(KeyManager.JUMP))
-            //{
-            //    _player.Movement.Jump();
-            //}
-            //if (Input.GetKeyDown(KeyManager.ATTACK))
-            //{
-            //    _player.Combat.BegginAttack();
-            //}
-            //if (_player.IsInteractePresent())
-            //{
-            //    if (Input.GetKeyDown(KeyCode.Alpha1))
-            //    {
-            //        _player.Interacte();
-            //    }
-            //}
+            if (inputAxis.x != 0)
+            {
+                _player.Movement.Move(inputAxis.x);
+            }
+            else
+            {
+                _player.Movement.Stop();
+            }
+#endif
         }
 
         #endregion
@@ -75,13 +68,27 @@ namespace SideScroller.Controller
 
         #region Methods
 
-        private void MoveLeft()
+        private void MoveLeftBool(bool isPress)
         {
-            _player.Movement.Move(-1f);
+            if (isPress)
+            {
+                _player.Movement.Move(-1f);
+            }
+            else if(!isPress)
+            {
+                _player.Movement.Stop();
+            }
         }
-        private void MoveRight()
+        private void MoveRightBool(bool isPress)
         {
-            _player.Movement.Move(1f);
+            if (isPress)
+            {
+                _player.Movement.Move(1f);
+            }
+            else if (!isPress)
+            {
+                _player.Movement.Stop();
+            }
         }
         private void Attack()
         {
@@ -94,9 +101,9 @@ namespace SideScroller.Controller
         }
         private void Interacte()
         {
-            if (_player.IsInteractePresent())
+            if (_player.Interact.IsInteractPresent())
             {
-                _player.Interacte();
+                _player.Interact.InteractWithObjects();
             }
         }
         #endregion

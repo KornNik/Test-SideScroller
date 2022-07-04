@@ -49,7 +49,6 @@ namespace SideScroller.UI.Parts
             if (PlayerCharacterType != PlayerCharacterTypes.None)
             {
                 SelectCharacterMenu.CharacterSelectType?.Invoke(PlayerCharacterType);
-                ScreenInterface.GetInstance().Execute(Types.ScreenTypes.InventoryMenu);
             }
             else
             {

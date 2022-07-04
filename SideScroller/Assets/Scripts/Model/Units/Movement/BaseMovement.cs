@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using SideScroller.Data.Unit;
 
 namespace SideScroller.Model.Unit.Movement
@@ -10,10 +11,7 @@ namespace SideScroller.Model.Unit.Movement
         protected BaseMovementParameters _movementParameters;
         protected BaseUnit _unitBehaviour;
 
-        protected Vector2 _inputAxis;
-        protected bool _flipped;
-        protected bool _isMoving;
-        protected bool _isJumping;
+        protected float _movementValue = 0f; 
 
         #endregion
 
@@ -24,6 +22,11 @@ namespace SideScroller.Model.Unit.Movement
         {
             _movementParameters = movementParameters;
             _unitBehaviour = unitBehaviour;
+            _unitBehaviour.UnitEventManager.Grounded += VelocityLanding;
+        }
+        ~BaseMovement()
+        {
+            _unitBehaviour.UnitEventManager.Grounded -= VelocityLanding;
         }
 
         #endregion
@@ -31,45 +34,40 @@ namespace SideScroller.Model.Unit.Movement
 
         #region Methods
 
-        public virtual void MovementCalculating()
+        public void MovementUpdate()
         {
-            if (_unitBehaviour.GroundCheck.IsGrounded && _isJumping)
-            {
-                _unitBehaviour.UnitRigidbody.velocity = Vector3.zero;
-                _isJumping = false;
-            }
+            _unitBehaviour.GroundCheck.LandingCheck(_unitBehaviour.GroundCheckCollider.transform.position);
         }
 
         public virtual void Move(float inputMovementX)
         {
-            if (inputMovementX == 0)
-            {
-                if (_isMoving)
-                {
-                    _isMoving = false;
-                    _unitBehaviour.UnitEventManager.Moving?.Invoke(false);
-                }
-            }
-            else
-            {
-                FlipUnit(inputMovementX);
-                if (!_isMoving)
-                {
-                    _isMoving = true;
-                    _unitBehaviour.UnitEventManager.Moving?.Invoke(true);
-                }
-            }
+            FlipUnit(inputMovementX);
+            _unitBehaviour.UnitBoolStates.IsMoving = true;
+            _unitBehaviour.UnitEventManager.Moving?.Invoke(true);
+        }
+        public virtual void Stop()
+        {
+            _unitBehaviour.UnitBoolStates.IsMoving = false;
+            _unitBehaviour.UnitEventManager.Moving?.Invoke(false);
         }
         public virtual void Jump()
         {
             _unitBehaviour.UnitEventManager.Jump?.Invoke();
-            _isJumping = true;
+            _unitBehaviour.UnitBoolStates.IsJumping = true;
         }
-
         protected virtual void FlipUnit(float movingInput)
         {
-             _flipped = movingInput < 0;
-            _unitBehaviour.transform.rotation = Quaternion.Euler(new Vector3(0f, _flipped ? 180 : 0f, 0f));
+            _unitBehaviour.UnitBoolStates.IsFlip = movingInput < 0;
+            _unitBehaviour.transform.rotation = Quaternion.Euler(new Vector3
+                (0f, _unitBehaviour.UnitBoolStates.IsFlip ? 180 : 0f, 0f));
+        }
+        protected virtual void VelocityLanding(bool isGrounded)
+        {
+            if (isGrounded && _unitBehaviour.UnitBoolStates.IsJumping)
+            {
+                _unitBehaviour.UnitRigidbody.velocity = Vector3.zero;
+                _unitBehaviour.UnitBoolStates.IsJumping = false;
+            }
         }
 
         #endregion

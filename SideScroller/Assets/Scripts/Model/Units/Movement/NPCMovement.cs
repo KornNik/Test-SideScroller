@@ -29,13 +29,13 @@ namespace SideScroller.Model.Unit.Movement
         {
             base.Move(inputMovementX);
 
-            var inputMovement = inputMovementX * _movementParameters.MovingSpeed.BaseValue * Time.fixedDeltaTime;
-            Vector2 directionMovement = new Vector2(inputMovement, 0);
-            _unitBehaviour.transform.Translate(directionMovement, Space.World);
+            Vector3 directionSurface = _unitBehaviour.SurfaceSlider.Project(_unitBehaviour.transform.right);
+            Vector3 offset = directionSurface * (_movementParameters.MovingSpeed.BaseValue * Time.fixedDeltaTime);
+            _unitBehaviour.UnitRigidbody.MovePosition(_unitBehaviour.UnitRigidbody.position + new Vector2(offset.x, offset.y));
         }
         public override void Jump()
         {
-            if (_unitBehaviour.GroundCheck.IsGrounded)
+            if (_unitBehaviour.UnitBoolStates.IsGrounded)
             {
                 base.Jump();
                 float jumpForce = Mathf.Sqrt(_movementParameters.JumpHeght.BaseValue * -2 * (Physics2D.gravity.y * _unitBehaviour.UnitRigidbody.gravityScale));

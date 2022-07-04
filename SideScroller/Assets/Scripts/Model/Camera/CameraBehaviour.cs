@@ -14,21 +14,13 @@ namespace SideScroller.Model.CameraBeh
         [SerializeField] private CameraData _cameraData;
 
         private BasePlayerCharacter _target;
+        private bool _isTarget;
 
         #endregion
 
 
         #region UnityMethods
 
-        private void OnEnable()
-        {
-            LevelController.OnPlayerLoaded += SetPlayer;
-        }
-
-        private void OnDisable()
-        {
-            LevelController.OnPlayerLoaded -= SetPlayer;
-        }
 
         private void Awake()
         {
@@ -37,7 +29,7 @@ namespace SideScroller.Model.CameraBeh
 
         private void FixedUpdate()
         {
-            if (_target != null)
+            if (_isTarget)
             {
                 CameraMovingToTarget(_target.transform);
             }
@@ -48,6 +40,15 @@ namespace SideScroller.Model.CameraBeh
 
         #region Methods
 
+        public void SetPlayer(BasePlayerCharacter playerCharacter)
+        {
+            if (playerCharacter is BasePlayerCharacter)
+            {
+                _target = playerCharacter;
+                _isTarget = true;
+            }
+        }
+
         private void CameraMovingToTarget(Transform target)
         {
             var desiredPosition = target.position + _cameraData.Offset;
@@ -55,10 +56,6 @@ namespace SideScroller.Model.CameraBeh
             transform.position = lerpPostion;
         }
 
-        private void SetPlayer(BasePlayerCharacter playerCharacter)
-        {
-            _target = playerCharacter;
-        }
         #endregion
     }
 }

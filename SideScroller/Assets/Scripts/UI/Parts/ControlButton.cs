@@ -11,10 +11,18 @@ namespace SideScroller.UI.Parts
         #region Fields
 
         public Action ButtonPress;
+        public Action<bool> IsButtonPressed;
 
         private Coroutine _pressButtonCoroutine;
 
         private bool _isButtonDown;
+
+        #endregion
+
+
+        #region Properties
+
+        public bool IsButtonDown { get { return _isButtonDown; } private set { _isButtonDown = value; IsButtonPressed?.Invoke(_isButtonDown); } }
 
         #endregion
 
@@ -25,7 +33,7 @@ namespace SideScroller.UI.Parts
         {
             base.OnPointerDown(eventData);
 
-            _isButtonDown = true;
+            IsButtonDown = true;
 
             if (!(_pressButtonCoroutine is Coroutine))
             {
@@ -37,7 +45,7 @@ namespace SideScroller.UI.Parts
         {
             base.OnPointerUp(eventData);
 
-            _isButtonDown = false;
+            IsButtonDown = false;
         }
 
         #endregion
@@ -47,9 +55,9 @@ namespace SideScroller.UI.Parts
 
         private IEnumerator ButtonPressingCoroutine()
         {
-            while (_isButtonDown)
+            while (IsButtonDown)
             {
-                ButtonPress?.Invoke();
+                IsButtonPressed?.Invoke(IsButtonDown);
                 yield return new WaitForFixedUpdate();
             }
             _pressButtonCoroutine = null;

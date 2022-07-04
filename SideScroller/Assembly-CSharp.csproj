@@ -53,7 +53,6 @@
     <UnityVersion>2020.3.17f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Helpers\Managers\EventManager.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Movement\BaseMovement.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\UnitAnimation.cs" />
     <Compile Include="Assets\Scripts\UI\Parts\SelectCharacterCell.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Assets\Scripts\Helpers\AssetsPath\ScreensAssetPath.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\AnimationEventInstalling.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\DamageType.cs" />
-    <Compile Include="Assets\Scripts\Helpers\Managers\KeyManager.cs" />
     <Compile Include="Assets\Scripts\Data\Level\LevelParameters.cs" />
     <Compile Include="Assets\Scripts\Helpers\Extensions\GroundCheck.cs" />
     <Compile Include="Assets\Scripts\Helpers\Managers\BanditAnimationClipManager.cs" />
@@ -101,12 +99,15 @@
     <Compile Include="Assets\Scripts\Model\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Death\BaseDeath.cs" />
     <Compile Include="Assets\Scripts\UI\Screens\ScreenInterface.cs" />
+    <Compile Include="Assets\Scripts\Helpers\SurfaceSlider.cs" />
     <Compile Include="Assets\Scripts\Data\Item\WeaponParameters.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\DamageEffectTypes.cs" />
+    <Compile Include="Assets\Scripts\Model\Units\UnitBoolStates.cs" />
     <Compile Include="Assets\Scripts\Helpers\Extensions\UIButtonExtension.cs" />
     <Compile Include="Assets\Scripts\Helpers\Managers\NavMeshAreasManager.cs" />
     <Compile Include="Assets\Scripts\Controller\LevelController.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Movement\NPCMovement.cs" />
+    <Compile Include="Assets\Scripts\Model\Item\DamagingItem\CommonRangedWeapon.cs" />
     <Compile Include="Assets\Scripts\Helpers\Managers\SwordsmanAnimationClipManager.cs" />
     <Compile Include="Assets\Scripts\Helpers\Managers\UnitAnimationParametersManager.cs" />
     <Compile Include="Assets\Scripts\Data\Unit\NPC\AIParameters.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Assets\Scripts\Model\Units\UnitStatesManager.cs" />
     <Compile Include="Assets\Scripts\Controller\Loaders\PlayerLoader.cs" />
     <Compile Include="Assets\Scripts\UI\Interfaces\IPartUI.cs" />
+    <Compile Include="Assets\Scripts\Helpers\Service\PlayerService.cs" />
     <Compile Include="Assets\Scripts\Data\Camera\CameraData.cs" />
     <Compile Include="Assets\Scripts\Model\Interfaces\IDamager.cs" />
     <Compile Include="Assets\Scripts\Data\Unit\Inventory\InventoryParameters.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Assets\Scripts\Model\Units\Combat\BaseCombat.cs" />
     <Compile Include="Assets\Scripts\Helpers\AssetsPath\NPCsAssetPath.cs" />
     <Compile Include="Assets\Scripts\Data\Unit\Player\BasePlayerParameters.cs" />
+    <Compile Include="Assets\Scripts\UI\Parts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\ArmorTypes.cs" />
     <Compile Include="Assets\Scripts\Model\Units\NPC\NPCAI.cs" />
     <Compile Include="Assets\Scripts\Data\Item\ProjectileParameters.cs" />
@@ -166,12 +169,12 @@
     <Compile Include="Assets\Scripts\UI\Interfaces\IListenerScreen.cs" />
     <Compile Include="Assets\Scripts\Controller\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Combat\GunnerCombat.cs" />
+    <Compile Include="Assets\Scripts\Helpers\Service\Services.cs" />
     <Compile Include="Assets\Scripts\Model\Item\BaseItem.cs" />
     <Compile Include="Assets\Scripts\Model\Item\DamagingItem\Arrow.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\NPCTypes.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\SwordsmanAnimation.cs" />
-    <Compile Include="Assets\Scripts\UI\Parts\HealthBar.cs" />
-    <Compile Include="Assets\Scripts\Model\Item\DamagingItem\CommonRangedWeapon.cs" />
+    <Compile Include="Assets\Scripts\Model\Units\Interact\BaseInteract.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

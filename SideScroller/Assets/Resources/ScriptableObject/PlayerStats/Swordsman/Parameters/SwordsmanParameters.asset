@@ -15,4 +15,6 @@ MonoBehaviour:
   _maxHealth: {fileID: 11400000, guid: 126eb416a89444242ba191be644117fc, type: 2}
   _armor: {fileID: 11400000, guid: 066731cb096c72a4fbc07d06734517e1, type: 2}
   _baseMovement: {fileID: 11400000, guid: 38a0f6ccb16ff37429a454ac2b5ebd1b, type: 2}
-  _currentHealth: 120
+  _currentHealth: 110
+  _interactDistance: 0.3
+  _invinsibleDuration: 0.5

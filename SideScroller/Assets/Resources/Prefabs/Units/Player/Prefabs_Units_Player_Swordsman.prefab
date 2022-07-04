@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5204603097324522536}
   - component: {fileID: 781113904024610862}
   - component: {fileID: 6543580780519895225}
+  - component: {fileID: 2363033700696496377}
   m_Layer: 7
   m_Name: Prefabs_Units_Player_Swordsman
   m_TagString: Player
@@ -165,6 +166,7 @@ MonoBehaviour:
   _attackArea: {fileID: 3812543157655911090}
   _inventoryTransform: {fileID: 978073030823524713}
   _unitSprite: {fileID: 1149410667054426921}
+  _surfaceSlider: {fileID: 2363033700696496377}
   _unitParameters: {fileID: 11400000, guid: 5f610b7d2652c0342bc95225f91d4f21, type: 2}
   _inventoryParameters: {fileID: 11400000, guid: 0c5aa12b58d91004697e96bfa31b31cf, type: 2}
   _unitCombatParameters: {fileID: 11400000, guid: dfd9ac75f2c7118459e90db9c986e396, type: 2}
@@ -195,6 +197,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitBehaviour: {fileID: 5204603097324522536}
   _unitAnimator: {fileID: 888586884327665687}
+--- !u!114 &2363033700696496377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938378286394547407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec7da93a7fab3f469b8fd576590c30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2174587891128149672
 GameObject:
   m_ObjectHideFlags: 0

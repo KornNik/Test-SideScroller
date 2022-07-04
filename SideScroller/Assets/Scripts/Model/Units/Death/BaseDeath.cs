@@ -42,11 +42,13 @@ namespace SideScroller.Model.Unit.Death
         {
             RenderVisibility.SpriteRenderVisibilityChange(_unit.transform, _unit.UnitSprite, false);
             ColliderEnabler.ColliderEnabledChanger(_unit.transform, _unit.UnitCollider, false);
+            _unit.UnitRigidbody.isKinematic = true;
         }
         public void Recover()
         {
             RenderVisibility.SpriteRenderVisibilityChange(_unit.transform, _unit.UnitSprite, false);
             ColliderEnabler.ColliderEnabledChanger(_unit.transform, _unit.UnitCollider, false);
+            _unit.UnitRigidbody.isKinematic = false;
         }
 
         #endregion

@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using SideScroller.Data.Item;
-using SideScroller.Model.Unit;
-using SideScroller.Helpers;
 using SideScroller.Helpers.Types;
 
 namespace SideScroller.Model.Item

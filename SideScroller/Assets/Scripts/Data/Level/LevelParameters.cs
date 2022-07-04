@@ -3,13 +3,14 @@ using SideScroller.Helpers.Types;
 
 namespace SideScroller.Data.Level
 {
-    [CreateAssetMenu(fileName ="LevelParameters", menuName ="Data/Level/LevelParameters")]
+    [CreateAssetMenu(fileName = "LevelParameters", menuName = "Data/Level/LevelParameters")]
     class LevelParameters : ScriptableObject
     {
         #region Fields
 
         [SerializeField] private int _enemyCount;
-        [SerializeField] private NPCTypes[] _enemyTypesArray;
+        [SerializeField] private NPCTypes[] _NPCTypesArray;
+        [SerializeField] private Vector3[] _NPCPositions;
 
         #endregion
 
@@ -17,17 +18,10 @@ namespace SideScroller.Data.Level
         #region Properties
 
         public int EnemyCount => _enemyCount;
-        public NPCTypes[] EnemyTypesArray => _enemyTypesArray;
+        public NPCTypes[] NPCTypesArray => _NPCTypesArray;
+        public Vector3[] NPCPositions => _NPCPositions;
 
         #endregion
 
-
-        #region UnityMethods
-
-        private void OnEnable()
-        {
-        }
-
-        #endregion
     }
 }

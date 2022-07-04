@@ -3,7 +3,6 @@ using SideScroller.Helpers;
 using SideScroller.UI.Parts;
 using SideScroller.Model.Item;
 using SideScroller.Model.Unit;
-using System.Collections.Generic;
 
 namespace SideScroller.Model.Inventory
 {

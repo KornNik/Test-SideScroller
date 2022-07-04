@@ -3,11 +3,13 @@ using System.Collections;
 using SideScroller.Data.Unit;
 using SideScroller.Data.Inventory;
 using SideScroller.Model.Inventory;
-using SideScroller.Helpers.Managers;
 using SideScroller.Model.Unit.Death;
 using SideScroller.Model.Unit.Combat;
-using SideScroller.Helpers.Extensions;
+using SideScroller.Model.Unit.Interact;
 using SideScroller.Model.Unit.Movement;
+using SideScroller.Helpers;
+using SideScroller.Helpers.Managers;
+using SideScroller.Helpers.Extensions;
 
 namespace SideScroller.Model.Unit
 {
@@ -25,6 +27,7 @@ namespace SideScroller.Model.Unit
 
         [SerializeField] protected SpriteRenderer _unitSprite;
 
+        [SerializeField] protected SurfaceSlider _surfaceSlider;
         [SerializeField] protected BaseUnitParameters _unitParameters;
         [SerializeField] protected InventoryParameters _inventoryParameters;
         [SerializeField] protected BaseCombatParameters _unitCombatParameters;
@@ -33,27 +36,23 @@ namespace SideScroller.Model.Unit
         protected BaseDeath _death;
         protected BaseCombat _combat;
         protected Equipment _equipment;
+        protected BaseInteract _interact;
         protected BaseMovement _movement;
         protected GroundCheck _groundCheck;
         protected BaseInventory _inventory;
+        protected UnitBoolStates _unitBoolStates;
         protected UnitStatesManager _statesManager;
         protected UnitEventManager _unitEventManager;
         protected InventoryEventManager _inventoryEventManager;
 
-        protected bool _isDead;
-        protected bool _isFlip;
-        protected bool _isVisible;
-        protected bool _isColliderActive;
-        protected bool _isAlive = true;
-        protected bool _isInvinsible = false;
-
         private Coroutine _invinsibleCoroutine;
-        private Collider2D[] _itemsInteractable;
 
         #endregion
 
 
         #region Properties
+
+        public SurfaceSlider SurfaceSlider => _surfaceSlider;
 
         public Collider2D UnitCollider => _unitCollider;
         public Rigidbody2D UnitRigidbody => _unitRigidbody;
@@ -68,8 +67,10 @@ namespace SideScroller.Model.Unit
         public BaseCombat Combat => _combat;
         public Equipment Equipment => _equipment;
         public BaseMovement Movement => _movement;
+        public BaseInteract Interact => _interact;
         public BaseInventory Inventory => _inventory;
         public GroundCheck GroundCheck => _groundCheck;
+        public UnitBoolStates UnitBoolStates => _unitBoolStates;
         public BaseUnitParameters Parameters => _unitParameters;
         public UnitStatesManager StatesManager => _statesManager;
         public UnitEventManager UnitEventManager => _unitEventManager;
@@ -77,9 +78,6 @@ namespace SideScroller.Model.Unit
         public BaseCombatParameters UnitCombatParameters => _unitCombatParameters;
         public BaseMovementParameters UnitMovementParameters => _unitMovementParameters;
         public InventoryEventManager InventoryEventManager => _inventoryEventManager;
-
-        public bool IsAlive => _isAlive;
-        public bool IsInvinsible => _isInvinsible;
 
         #endregion
 
@@ -93,22 +91,31 @@ namespace SideScroller.Model.Unit
             _unitRigidbody = GetComponent<Rigidbody2D>();
             _groundCheckCollider = GetComponentInChildren<Collider2D>();
 
+            _unitBoolStates = new UnitBoolStates();
             _unitEventManager = new UnitEventManager();
             _inventoryEventManager = new InventoryEventManager();
 
             _statesManager = new UnitStatesManager(this);
             _death = new BaseDeath(this);
             _groundCheck = new GroundCheck(this);
+            _interact = new BaseInteract(this);
             _equipment = new Equipment(this);
             _inventory = new BaseInventory(this);
+        }
 
-            _itemsInteractable = new Collider2D[32];
+        protected virtual void OnEnable()
+        {
+            _unitParameters.HealthParametersChanged += OnHealthChaged;
+        }
+
+        protected virtual void OnDisable()
+        {
+            _unitParameters.HealthParametersChanged -= OnHealthChaged;
         }
 
         protected virtual void Update()
         {
-            _groundCheck.LandingCheck();
-            _movement.MovementCalculating();
+            _movement.MovementUpdate();
         }
 
         #endregion
@@ -118,11 +125,11 @@ namespace SideScroller.Model.Unit
 
         public virtual void ReceiveDamage(float damage)
         {
-            if (!_isInvinsible)
+            if (!_unitBoolStates.IsInvinsible)
             {
                 _unitEventManager.Hurt?.Invoke();
                 _unitParameters.TakeDamage(damage);
-                _isInvinsible = true;
+                _unitBoolStates.IsInvinsible = true;
             }
             if (_invinsibleCoroutine == null)
             {
@@ -139,29 +146,16 @@ namespace SideScroller.Model.Unit
 
         #region Methods
 
+        private void OnHealthChaged(float health)
+        {
+            _unitEventManager.HealthChanged?.Invoke(health);
+        }
+
         private IEnumerator InvinsibleTimer()
         {
             yield return new WaitForSeconds(0.3f);
             _invinsibleCoroutine = null;
-            _isInvinsible = false;
-        }
-
-        public void Interacte()
-        {
-            var countItems = Physics2D.OverlapCircleNonAlloc(transform.position, 2f, _itemsInteractable, LayersManager.Item);
-            for (int i = 0; i < countItems; i++)
-            {
-                var interactable = _itemsInteractable[i].GetComponent<IInteractable>();
-                if (interactable != null)
-                {
-                    interactable.Interacte(this);
-                }
-            }
-        }
-        public bool IsInteractePresent()
-        {
-            var isFindTarget = Physics2D.OverlapCircle(transform.position, 2f, LayersManager.Item);
-            return isFindTarget;
+            _unitBoolStates.IsInvinsible = false;
         }
 
         #endregion

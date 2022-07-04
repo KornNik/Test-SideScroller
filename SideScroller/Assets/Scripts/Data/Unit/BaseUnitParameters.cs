@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using SideScroller.Data.Parameter;
 
 namespace SideScroller.Data.Unit
@@ -7,11 +8,15 @@ namespace SideScroller.Data.Unit
     {
         #region Fields
 
+        public Action<float> HealthParametersChanged;
+
         [SerializeField] protected Stat _maxHealth;
         [SerializeField] protected Stat _armor;
         [SerializeField] protected BaseMovementParameters _baseMovement;
 
         [SerializeField] protected float _currentHealth;
+        [SerializeField] protected float _interactDistance;
+        [SerializeField] protected float _invinsibleDuration;
 
         #endregion
 
@@ -21,7 +26,9 @@ namespace SideScroller.Data.Unit
         public Stat MaxHealth => _maxHealth;
         public Stat Armor => _armor;
         public BaseMovementParameters BaseMovement => _baseMovement;
-        public float CurrentHealth => _currentHealth;
+
+        public float InteractDistance => _interactDistance;
+        public float CurrentHealth { get { return _currentHealth; } private set { _currentHealth = value; HealthParametersChanged?.Invoke(GetHealthRate()); } }
 
         #endregion
 
@@ -30,7 +37,7 @@ namespace SideScroller.Data.Unit
 
         private void OnEnable()
         {
-            _currentHealth = _maxHealth.BaseValue;
+            CurrentHealth = _maxHealth.BaseValue;
         }
 
         #endregion
@@ -40,35 +47,39 @@ namespace SideScroller.Data.Unit
 
         public virtual void TakeDamage(float damage)
         {
-            damage *= _armor.BaseValue / 100;
+            damage *= _armor.BaseValue / 10;
             if (damage > 0)
             {
-                _currentHealth -= damage;
-                if (_currentHealth <= 0)
+                CurrentHealth -= damage;
+                if (CurrentHealth <= 0)
                 {
-                    _currentHealth = 0;
+                    CurrentHealth = 0;
                 }
             }
         }
-        public void AddHealth(int amount)
+        public void AddHealth(float amount)
         {
-            _currentHealth += amount;
-            if (_currentHealth > _maxHealth.BaseValue)
+            CurrentHealth += amount;
+            if (CurrentHealth > _maxHealth.BaseValue)
             {
-                _currentHealth = _maxHealth.BaseValue;
+                CurrentHealth = _maxHealth.BaseValue;
             }
         }
 
         public void SetHealthRate(float rate)
         {
-            _currentHealth = rate == 0 ? 0 : (int)(_maxHealth.BaseValue / rate);
+            CurrentHealth = rate == 0 ? 0 : (int)(_maxHealth.BaseValue / rate);
+        }
+        public float GetHealthRate()
+        {
+            return CurrentHealth == 0 ? 0 : (CurrentHealth / _maxHealth.BaseValue);
         }
 
         public void SetHealthToMax()
         {
-            if (_currentHealth == 0)
+            if (CurrentHealth == 0)
             {
-                _currentHealth = _maxHealth.BaseValue;
+                AddHealth(_maxHealth.BaseValue);
             }
         }
 

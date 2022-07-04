@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SideScroller.Data.Parameter
 {
-    [CreateAssetMenu(fileName = "Stat", menuName = "Data/Unit/Stat")]
+    [CreateAssetMenu(fileName = "Stat", menuName = "Data/Stat")]
     class Stat : ScriptableObject
     {
         #region Fields
