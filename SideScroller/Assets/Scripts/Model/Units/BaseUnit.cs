@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SideScroller.Helpers;
+using SideScroller.Helpers.Managers;
 using SideScroller.Data.Unit;
 using SideScroller.Data.Inventory;
 using SideScroller.Model.Inventory;
 using SideScroller.Model.Unit.Death;
-using SideScroller.Model.Unit.Combat;
-using SideScroller.Model.Unit.Interact;
-using SideScroller.Model.Unit.Movement;
-using SideScroller.Helpers;
-using SideScroller.Helpers.Managers;
-using SideScroller.Helpers.Extensions;
 
 namespace SideScroller.Model.Unit
 {
@@ -34,16 +30,14 @@ namespace SideScroller.Model.Unit
         [SerializeField] protected BaseMovementParameters _unitMovementParameters;
 
         protected BaseDeath _death;
-        protected BaseCombat _combat;
+        protected Health _unitHealth;
         protected Equipment _equipment;
-        protected BaseInteract _interact;
-        protected BaseMovement _movement;
-        protected GroundCheck _groundCheck;
-        protected BaseInventory _inventory;
+        protected Inventory.Inventory _inventory;
         protected UnitBoolStates _unitBoolStates;
-        protected UnitStatesManager _statesManager;
+        protected MotionManager _motionManager;
         protected UnitEventManager _unitEventManager;
-        protected InventoryEventManager _inventoryEventManager;
+
+        protected Vector3 _spawnPosition;
 
         private Coroutine _invinsibleCoroutine;
 
@@ -52,32 +46,29 @@ namespace SideScroller.Model.Unit
 
         #region Properties
 
-        public SurfaceSlider SurfaceSlider => _surfaceSlider;
-
-        public Collider2D UnitCollider => _unitCollider;
-        public Rigidbody2D UnitRigidbody => _unitRigidbody;
-        public Collider2D GroundCheckCollider => _groundCheckCollider;
 
         public Transform AttackArea => _attackArea;
-        public Transform InventoryTransform => _inventoryTransform;
-
         public SpriteRenderer UnitSprite => _unitSprite;
+        public Collider2D UnitCollider => _unitCollider;
+        public Rigidbody2D UnitRigidbody => _unitRigidbody;
+        public Transform InventoryTransform => _inventoryTransform;
+        public Collider2D GroundCheckCollider => _groundCheckCollider;
 
         public BaseDeath Death => _death;
-        public BaseCombat Combat => _combat;
+        public Health UnitHealth => _unitHealth;
         public Equipment Equipment => _equipment;
-        public BaseMovement Movement => _movement;
-        public BaseInteract Interact => _interact;
-        public BaseInventory Inventory => _inventory;
-        public GroundCheck GroundCheck => _groundCheck;
+        public Inventory.Inventory Inventory => _inventory;
+        public SurfaceSlider SurfaceSlider => _surfaceSlider;
         public UnitBoolStates UnitBoolStates => _unitBoolStates;
-        public BaseUnitParameters Parameters => _unitParameters;
-        public UnitStatesManager StatesManager => _statesManager;
+        public MotionManager MotionManager => _motionManager;
         public UnitEventManager UnitEventManager => _unitEventManager;
+
+        public BaseUnitParameters Parameters => _unitParameters;
         public InventoryParameters InventoryParameters => _inventoryParameters;
         public BaseCombatParameters UnitCombatParameters => _unitCombatParameters;
         public BaseMovementParameters UnitMovementParameters => _unitMovementParameters;
-        public InventoryEventManager InventoryEventManager => _inventoryEventManager;
+
+        public Vector3 SpawnPosition => _spawnPosition;
 
         #endregion
 
@@ -86,36 +77,25 @@ namespace SideScroller.Model.Unit
 
         protected virtual void Awake()
         {
-            _unitCollider = GetComponent<Collider2D>();
-            _unitSprite = GetComponent<SpriteRenderer>();
-            _unitRigidbody = GetComponent<Rigidbody2D>();
-            _groundCheckCollider = GetComponentInChildren<Collider2D>();
+            GetComponetsFromObject();
+            CreateObjectBehaviours();
 
-            _unitBoolStates = new UnitBoolStates();
-            _unitEventManager = new UnitEventManager();
-            _inventoryEventManager = new InventoryEventManager();
-
-            _statesManager = new UnitStatesManager(this);
-            _death = new BaseDeath(this);
-            _groundCheck = new GroundCheck(this);
-            _interact = new BaseInteract(this);
-            _equipment = new Equipment(this);
-            _inventory = new BaseInventory(this);
+            _spawnPosition = transform.position;
         }
 
         protected virtual void OnEnable()
         {
-            _unitParameters.HealthParametersChanged += OnHealthChaged;
+            _unitHealth.HealthParametersChanged += OnHealthChaged;
         }
 
         protected virtual void OnDisable()
         {
-            _unitParameters.HealthParametersChanged -= OnHealthChaged;
+            _unitHealth.HealthParametersChanged -= OnHealthChaged;
         }
 
         protected virtual void Update()
         {
-            _movement.MovementUpdate();
+            _motionManager.MovementUpdate();
         }
 
         #endregion
@@ -128,14 +108,14 @@ namespace SideScroller.Model.Unit
             if (!_unitBoolStates.IsInvinsible)
             {
                 _unitEventManager.Hurt?.Invoke();
-                _unitParameters.TakeDamage(damage);
+                _unitHealth.TakeDamage(damage);
                 _unitBoolStates.IsInvinsible = true;
             }
             if (_invinsibleCoroutine == null)
             {
                 _invinsibleCoroutine = StartCoroutine(InvinsibleTimer());
             }
-            if (_unitParameters.CurrentHealth == 0)
+            if (_unitHealth.CurrentHealth == 0)
             {
                 _unitEventManager.Death?.Invoke();
             }
@@ -145,7 +125,23 @@ namespace SideScroller.Model.Unit
 
 
         #region Methods
+        private void GetComponetsFromObject()
+        {
+            _unitCollider = GetComponent<Collider2D>();
+            _unitSprite = GetComponent<SpriteRenderer>();
+            _unitRigidbody = GetComponent<Rigidbody2D>();
+            _groundCheckCollider = GetComponentInChildren<Collider2D>();
+        }
+        private void CreateObjectBehaviours()
+        {
+            _unitBoolStates = new UnitBoolStates();
+            _unitEventManager = new UnitEventManager();
 
+            _death = new BaseDeath(this);
+            _equipment = new Equipment(this);
+            _inventory = new Inventory.Inventory(this);
+            _unitHealth = new Health(Parameters);
+        }
         private void OnHealthChaged(float health)
         {
             _unitEventManager.HealthChanged?.Invoke(health);
@@ -153,7 +149,7 @@ namespace SideScroller.Model.Unit
 
         private IEnumerator InvinsibleTimer()
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(Parameters.InvinsibleDuration);
             _invinsibleCoroutine = null;
             _unitBoolStates.IsInvinsible = false;
         }

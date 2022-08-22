@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using SideScroller.Model.Item;
 using UnityEngine.EventSystems;
 using SideScroller.Helpers.Types;
@@ -19,18 +17,6 @@ namespace SideScroller.UI.Parts
         #region Properties
 
         public ArmorTypes ArmorType => _armorType;
-
-        #endregion
-
-
-        #region UnityMethods
-
-
-
-        #endregion
-
-
-        #region Methods
 
         #endregion
 

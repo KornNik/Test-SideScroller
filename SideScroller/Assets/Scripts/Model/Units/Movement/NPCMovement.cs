@@ -5,12 +5,6 @@ namespace SideScroller.Model.Unit.Movement
 {
     class NPCMovement : BaseMovement
     {
-        #region Fields
-
-
-        #endregion
-
-
         #region ClassLifeCycle
 
         public NPCMovement(BaseMovementParameters movementParameters, BaseUnit unitBehaviour)
@@ -25,9 +19,9 @@ namespace SideScroller.Model.Unit.Movement
 
         #region Methods
 
-        public override void Move(float inputMovementX)
+        public override void Move(float inputMovementX, float inputMovementY)
         {
-            base.Move(inputMovementX);
+            base.Move(inputMovementX, inputMovementY);
 
             Vector3 directionSurface = _unitBehaviour.SurfaceSlider.Project(_unitBehaviour.transform.right);
             Vector3 offset = directionSurface * (_movementParameters.MovingSpeed.BaseValue * Time.fixedDeltaTime);

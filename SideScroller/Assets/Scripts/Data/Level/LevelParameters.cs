@@ -8,18 +8,18 @@ namespace SideScroller.Data.Level
     {
         #region Fields
 
-        [SerializeField] private int _enemyCount;
-        [SerializeField] private NPCTypes[] _NPCTypesArray;
+        [SerializeField] private Vector3 _playerPosition;
         [SerializeField] private Vector3[] _NPCPositions;
+        [SerializeField] private NPCTypes[] _NPCTypesArray;
 
         #endregion
 
 
         #region Properties
 
-        public int EnemyCount => _enemyCount;
-        public NPCTypes[] NPCTypesArray => _NPCTypesArray;
+        public Vector3 PlayerPosition => _playerPosition;
         public Vector3[] NPCPositions => _NPCPositions;
+        public NPCTypes[] NPCTypesArray => _NPCTypesArray;
 
         #endregion
 

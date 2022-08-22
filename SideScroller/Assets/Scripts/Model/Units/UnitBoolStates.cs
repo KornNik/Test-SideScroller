@@ -14,8 +14,6 @@ namespace SideScroller.Model.Unit
         private bool _isInvinsible;
         private bool _isColliderActive;
 
-        private bool _isAlive = true;
-
         #endregion
 
 
@@ -23,7 +21,6 @@ namespace SideScroller.Model.Unit
 
         public bool IsDead { get { return _isDead; } set { _isDead = value; } }
         public bool IsFlip { get { return _isFlip; } set { _isFlip = value; } }
-        public bool IsAlive { get { return _isAlive; } set { _isAlive = value; } }
         public bool IsMoving { get { return _isMoving; } set { _isMoving = value; } }
         public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
         public bool IsVisible { get { return _isVisible; } set { _isVisible = value; } }

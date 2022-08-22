@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using SideScroller.Data.Unit.AI;
-using SideScroller.Model.Unit.Movement;
-using SideScroller.Model.Unit.Combat;
 using SideScroller.Helpers.Managers;
 
 
@@ -12,12 +10,9 @@ namespace SideScroller.Model.Unit.AI
         #region Fields
 
         protected BaseNPC _unit;
-        protected BaseCombat _combat;
         protected IDamageable _target;
-        protected BaseMovement _movement;
         protected AIParameters _AIParameters;
 
-        protected bool _isDead;
         protected bool _isPatrol = true;
         protected bool _isOnPatrolArea = true;
 
@@ -30,11 +25,9 @@ namespace SideScroller.Model.Unit.AI
 
         #region ClassLifeCycle
 
-        public NPCAI(BaseNPC unit, BaseMovement movement, BaseCombat combat,AIParameters AIParameters)
+        public NPCAI(BaseNPC unit ,AIParameters AIParameters)
         {
             _unit = unit;
-            _combat = combat;
-            _movement = movement;
             _AIParameters = AIParameters;
 
             _targetsToChase = new Collider2D[32];
@@ -47,6 +40,8 @@ namespace SideScroller.Model.Unit.AI
 
         public void DoAI()
         {
+            if (_unit.UnitBoolStates.IsDead) return;
+
             if (!IsTargetPresent())
             {
                 MovingAction();
@@ -79,9 +74,9 @@ namespace SideScroller.Model.Unit.AI
             var pointDirection = point - _unit.transform.position;
             if (pointDirection.x > 0)
             {
-                _movement.Move(_unit.UnitMovementParameters.MovingSpeed.BaseValue);
+                _unit.MotionManager.Movement.Move(1f,0f);
             }
-            else { _movement.Move(_unit.UnitMovementParameters.MovingSpeed.BaseValue * -1); }
+            else { _unit.MotionManager.Movement.Move(-1f, 0f); }
         }
         protected virtual void Patrol()
         {
@@ -114,7 +109,7 @@ namespace SideScroller.Model.Unit.AI
         }
         protected virtual void AttackTarget(IDamageable damageable)
         {
-            _combat.BegginAttack();
+            _unit.MotionManager.Combat.BegginAttack();
         }
         protected virtual void SearchTarget()
         {

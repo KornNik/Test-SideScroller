@@ -4,7 +4,7 @@ using SideScroller.Data.Unit;
 
 namespace SideScroller.Model.Unit.Movement
 {
-    abstract class BaseMovement
+    abstract class BaseMovement : IMove
     {
         #region Fields
 
@@ -34,12 +34,7 @@ namespace SideScroller.Model.Unit.Movement
 
         #region Methods
 
-        public void MovementUpdate()
-        {
-            _unitBehaviour.GroundCheck.LandingCheck(_unitBehaviour.GroundCheckCollider.transform.position);
-        }
-
-        public virtual void Move(float inputMovementX)
+        public virtual void Move(float inputMovementX, float inputMovementY)
         {
             FlipUnit(inputMovementX);
             _unitBehaviour.UnitBoolStates.IsMoving = true;

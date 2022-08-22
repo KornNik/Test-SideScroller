@@ -5,12 +5,6 @@ namespace SideScroller.Model.Unit.AnimationUnit
 {
     class SwordsmanAnimation : UnitAnimation<Swordsman>
     {
-        #region Fields
-
-
-        #endregion
-
-
         #region UnityMethods
 
         protected override void Awake()
@@ -28,7 +22,7 @@ namespace SideScroller.Model.Unit.AnimationUnit
 
         private void OnWeaponDamaging()
         {
-            _unitBehaviour.Combat.AttackOnEventAnimation();
+            _unitBehaviour.MotionManager.Combat.AttackOnEventAnimation();
         }
 
         #endregion

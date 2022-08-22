@@ -63,11 +63,12 @@
     <Compile Include="Assets\Scripts\Data\Cell\PlayerCellData.cs" />
     <Compile Include="Assets\Scripts\UI\Screens\CharacterMenu.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\ProjectileTypes.cs" />
-    <Compile Include="Assets\Scripts\Model\Inventory\BaseInventory.cs" />
+    <Compile Include="Assets\Scripts\Model\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\Helpers\Managers\LayersManager.cs" />
     <Compile Include="Assets\Scripts\UI\Parts\CharacterEquipmentUI.cs" />
     <Compile Include="Assets\Scripts\Data\Stat\Stat.cs" />
     <Compile Include="Assets\Scripts\Helpers\AssetsPath\ScreensAssetPath.cs" />
+    <Compile Include="Assets\Scripts\Model\Level\LevelsManager.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\AnimationEventInstalling.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\DamageType.cs" />
     <Compile Include="Assets\Scripts\Data\Level\LevelParameters.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="Assets\Scripts\UI\Types\ScreenElementTypes.cs" />
     <Compile Include="Assets\Scripts\Helpers\Pool\PoolObjects.cs" />
     <Compile Include="Assets\Scripts\UI\Parts\WeaponEquipmentCell.cs" />
+    <Compile Include="Assets\Scripts\Model\Inputs\CommonInput.cs" />
+    <Compile Include="Assets\Scripts\Data\Level\LevelsBundle.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Player\Gunner.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Combat\SwordsmanCombat.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\WeaponType.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Assets\Scripts\Helpers\AssetsPath\ProjectilesAssetPath.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\CameraTypes.cs" />
     <Compile Include="Assets\Scripts\Model\Item\DamagingItem\CommonArmor.cs" />
+    <Compile Include="Assets\Scripts\Model\Units\Movement\IMove.cs" />
     <Compile Include="Assets\Scripts\Model\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Death\BaseDeath.cs" />
     <Compile Include="Assets\Scripts\UI\Screens\ScreenInterface.cs" />
@@ -114,12 +118,13 @@
     <Compile Include="Assets\Scripts\Helpers\Customs\CustomResources.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\AnimationEventHandler.cs" />
     <Compile Include="Assets\Scripts\UI\Parts\CharacterInventoryUI.cs" />
-    <Compile Include="Assets\Scripts\Model\Units\UnitStatesManager.cs" />
     <Compile Include="Assets\Scripts\Controller\Loaders\PlayerLoader.cs" />
     <Compile Include="Assets\Scripts\UI\Interfaces\IPartUI.cs" />
     <Compile Include="Assets\Scripts\Helpers\Service\PlayerService.cs" />
     <Compile Include="Assets\Scripts\Data\Camera\CameraData.cs" />
+    <Compile Include="Assets\Scripts\Model\Units\Interact\BaseInteract.cs" />
     <Compile Include="Assets\Scripts\Model\Interfaces\IDamager.cs" />
+    <Compile Include="Assets\Scripts\Model\Level\LevelTrigger.cs" />
     <Compile Include="Assets\Scripts\Data\Unit\Inventory\InventoryParameters.cs" />
     <Compile Include="Assets\Scripts\UI\Parts\ArmorEquipmentCell.cs" />
     <Compile Include="Assets\Scripts\Model\Units\UnitStatesPositionTypes.cs" />
@@ -128,6 +133,7 @@
     <Compile Include="Assets\Scripts\Helpers\Pool\ProjectilePool.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\LevelTypes.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\BanditAnimation.cs" />
+    <Compile Include="Assets\Scripts\Model\Units\Health.cs" />
     <Compile Include="Assets\Scripts\UI\Parts\ItemCell.cs" />
     <Compile Include="Assets\Scripts\Model\Item\DamagingItem\Weapon.cs" />
     <Compile Include="Assets\Scripts\Model\Interfaces\IInteractable.cs" />
@@ -158,14 +164,17 @@
     <Compile Include="Assets\Scripts\Data\Cell\ListPlayerCharacters.cs" />
     <Compile Include="Assets\Scripts\Model\Inventory\Equipment\InventoryEventManager.cs" />
     <Compile Include="Assets\Scripts\Helpers\AssetsPath\DatasAssetPath.cs" />
+    <Compile Include="Assets\Scripts\Model\Inputs\BaseInputs.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Combat\BanditCombat.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\GunnerAnimation.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Movement\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Data\Unit\BaseUnitParameters.cs" />
     <Compile Include="Assets\Scripts\UI\Screens\GameMenu.cs" />
+    <Compile Include="Assets\Scripts\Model\Units\Movement\MotionManager.cs" />
     <Compile Include="Assets\Scripts\Model\Units\NPC\PatrolPoinGenerator.cs" />
     <Compile Include="Assets\Scripts\Model\Camera\CameraBehaviour.cs" />
     <Compile Include="Assets\Scripts\Data\Unit\NPC\BaseNPCParameters.cs" />
+    <Compile Include="Assets\Scripts\Controller\Loaders\LevelLoader.cs" />
     <Compile Include="Assets\Scripts\UI\Interfaces\IListenerScreen.cs" />
     <Compile Include="Assets\Scripts\Controller\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Combat\GunnerCombat.cs" />
@@ -174,7 +183,6 @@
     <Compile Include="Assets\Scripts\Model\Item\DamagingItem\Arrow.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\NPCTypes.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\SwordsmanAnimation.cs" />
-    <Compile Include="Assets\Scripts\Model\Units\Interact\BaseInteract.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

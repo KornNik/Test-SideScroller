@@ -1,21 +1,17 @@
 ﻿using SideScroller.Model.Unit.Combat;
+using SideScroller.Model.Unit.Movement;
 
 namespace SideScroller.Model.Unit
 {
     class Gunner : BasePlayerCharacter
     {
-        #region Fields
-
-
-        #endregion
-
-
         #region UnityMethods
 
         protected override void Awake()
         {
             base.Awake();
-            _combat = new GunnerCombat(_unitCombatParameters, this);
+            _motionManager = new MotionManager(this, new PlayerMovement(UnitMovementParameters, this),
+                new GunnerCombat(UnitCombatParameters, this));
         }
 
         #endregion

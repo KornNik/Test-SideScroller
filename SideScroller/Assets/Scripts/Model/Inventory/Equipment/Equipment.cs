@@ -62,7 +62,6 @@ namespace SideScroller.Model.Inventory
                 EquipArmor(item as CommonArmor);
             }
 
-            _unit.InventoryEventManager.EquipmentChanged?.Invoke();
             RenderVisibility.SpriteRenderVisibilityChange(item.transform,item.ItemSpriteRenderer,false);
             ColliderEnabler.ColliderEnabledChanger(item.transform, item.ItemCollider, false);
         }

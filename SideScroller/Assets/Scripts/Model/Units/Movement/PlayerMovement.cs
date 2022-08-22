@@ -25,16 +25,16 @@ namespace SideScroller.Model.Unit.Movement
 
         #region Methods
 
-        public override void Move(float inputMoveementX)
+        public override void Move(float inputMoveementX, float inputMovementY)
         {
-            base.Move(inputMoveementX);
-            if (!_unitBehaviour.UnitBoolStates.IsInvinsible && _unitBehaviour.UnitBoolStates.IsGrounded)
+            base.Move(inputMoveementX, inputMovementY);
+            if (_unitBehaviour.UnitBoolStates.IsGrounded)
             {
                 var inputMovement = inputMoveementX * _movementParameters.MovingSpeed.BaseValue * Time.fixedDeltaTime;
                 Vector2 directionMovement = new Vector2(inputMovement, 0);
                 _unitBehaviour.transform.Translate(directionMovement, Space.World);
             }
-            else if (!_unitBehaviour.UnitBoolStates.IsInvinsible && !_unitBehaviour.UnitBoolStates.IsGrounded)
+            else if (!_unitBehaviour.UnitBoolStates.IsGrounded)
             {
                 var inputMovement = inputMoveementX * _movementParameters.MovingSpeed.BaseValue * Time.fixedDeltaTime;
                 Vector2 directionMovement = new Vector2(inputMovement, 0);

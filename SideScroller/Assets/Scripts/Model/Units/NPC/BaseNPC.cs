@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using SideScroller.Data.Unit.AI;
-using SideScroller.Model.Unit.Movement;
 using SideScroller.Model.Unit.AI;
 using SideScroller.UI.Parts;
 
@@ -11,10 +10,9 @@ namespace SideScroller.Model.Unit
         #region Fields
 
         [SerializeField] protected AIParameters _AIParameters;
-        [SerializeField] protected HealthBar _healthBar;
 
         protected NPCAI _NPCBrains;
-
+        protected HealthBar _healthBar;
         protected Vector3 _patrolPoint;
 
         #endregion
@@ -33,12 +31,16 @@ namespace SideScroller.Model.Unit
         protected override void Awake()
         {
             base.Awake();
-            _movement = new NPCMovement(_unitMovementParameters, this);
-            _patrolPoint = transform.position;
+            _patrolPoint = SpawnPosition;
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.SetUnit(this);
         }
 
+        protected override void Update()
+        {
+            base.Update();
+            _NPCBrains.DoAI();
+        }
         #endregion
     }
 }

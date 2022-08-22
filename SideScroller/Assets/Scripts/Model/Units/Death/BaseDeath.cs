@@ -11,12 +11,6 @@ namespace SideScroller.Model.Unit.Death
         #endregion
 
 
-        #region Properties
-
-
-        #endregion
-
-
         #region ClassLifeCycle
 
         public BaseDeath(BaseUnit unit)
@@ -42,13 +36,16 @@ namespace SideScroller.Model.Unit.Death
         {
             RenderVisibility.SpriteRenderVisibilityChange(_unit.transform, _unit.UnitSprite, false);
             ColliderEnabler.ColliderEnabledChanger(_unit.transform, _unit.UnitCollider, false);
-            _unit.UnitRigidbody.isKinematic = true;
+            _unit.UnitRigidbody.simulated = false;
+            _unit.UnitBoolStates.IsDead = true;
         }
         public void Recover()
         {
-            RenderVisibility.SpriteRenderVisibilityChange(_unit.transform, _unit.UnitSprite, false);
-            ColliderEnabler.ColliderEnabledChanger(_unit.transform, _unit.UnitCollider, false);
-            _unit.UnitRigidbody.isKinematic = false;
+            RenderVisibility.SpriteRenderVisibilityChange(_unit.transform, _unit.UnitSprite, true);
+            ColliderEnabler.ColliderEnabledChanger(_unit.transform, _unit.UnitCollider, true);
+            _unit.UnitRigidbody.simulated = true;
+            _unit.UnitBoolStates.IsDead = false;
+            _unit.transform.position = _unit.SpawnPosition;
         }
 
         #endregion

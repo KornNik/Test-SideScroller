@@ -11,6 +11,9 @@ namespace SideScroller.Helpers.AssetsPath
         {
             {
                 LevelTypes.Forest, "Prefabs/Levels/Prefabs_Levels_Forest"
+            },
+            {
+                LevelTypes.Dungeon, "Prefabs/Levels/Prefabs_Levels_Dungeon"
             }
 
         };

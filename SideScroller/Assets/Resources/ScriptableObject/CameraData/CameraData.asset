@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CameraData
   m_EditorClassIdentifier: 
   _smoothFactor: 3
-  _offset: {x: 0, y: 0, z: -3}
+  _offset: {x: 0, y: 0, z: -1.9}

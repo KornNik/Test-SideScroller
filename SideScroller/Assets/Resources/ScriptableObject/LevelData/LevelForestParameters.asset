@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7b424ee91c9df4cbffe1efe67d853b, type: 3}
   m_Name: LevelForestParameters
   m_EditorClassIdentifier: 
-  _enemyCount: 4
-  _NPCTypesArray: 02000000020000000200000002000000
+  _playerPosition: {x: -9.321, y: -0.015, z: 0}
   _NPCPositions:
   - {x: 27.956673, y: -0.4220119, z: 0}
   - {x: 16.916674, y: -0.4020119, z: 0}
   - {x: 22.936674, y: -0.4220119, z: 0}
   - {x: 7.646673, y: -0.4800119, z: 0}
+  _NPCTypesArray: 02000000020000000200000002000000

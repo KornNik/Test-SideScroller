@@ -1,10 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using SideScroller.Model.Item;
 using UnityEngine.EventSystems;
-using SideScroller.Helpers.Types;
-using SideScroller.Model.Inventory;
 
 namespace SideScroller.UI.Parts
 {

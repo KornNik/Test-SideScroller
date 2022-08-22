@@ -11,8 +11,8 @@ namespace SideScroller.Controller
     {
         #region Fields
 
-        private WeaponType _weaponType;
-        private NPCTypes _NPCType;
+        private NPCTypes _NPCType = NPCTypes.Bandit;
+        private WeaponType _weaponType = WeaponType.Sword;
         private Vector3 _startPosition;
 
         #endregion
@@ -23,7 +23,7 @@ namespace SideScroller.Controller
         private BaseNPC Build()
         {
             var NPCResources = CustomResources.Load<BaseNPC>(NPCsAssetPath.NPCsPath[_NPCType]);
-            var NPC = Object.Instantiate(NPCResources, new Vector3(_startPosition.x, _startPosition.y, 0f), Quaternion.identity);
+            var NPC = Object.Instantiate(NPCResources, _startPosition, Quaternion.identity);
 
             var weaponResources = CustomResources.Load<Weapon>(WeaponsAssetPath.WeaponsPath[_weaponType]);
             var weapon = Object.Instantiate(weaponResources, Vector3.zero, Quaternion.identity, NPC.transform);

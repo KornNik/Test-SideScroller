@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using SideScroller.Model.Unit;
-using SideScroller.Helpers.Services;
 
 namespace SideScroller.UI.Parts
 {
@@ -24,6 +23,8 @@ namespace SideScroller.UI.Parts
             if (_unit is BaseUnit)
             {
                 _unit.UnitEventManager.HealthChanged += HealthDisplay;
+                _unit.UnitEventManager.Death += HealthBarOff;
+                _unit.UnitEventManager.Recover += HealthBarOn;
             }
         }
 
@@ -32,6 +33,8 @@ namespace SideScroller.UI.Parts
             if (_unit is BaseUnit)
             {
                 _unit.UnitEventManager.HealthChanged -= HealthDisplay;
+                _unit.UnitEventManager.Death -= HealthBarOff;
+                _unit.UnitEventManager.Recover -= HealthBarOn;
             }
         }
 
@@ -45,9 +48,17 @@ namespace SideScroller.UI.Parts
             _unit = unit;
         }
 
-        public void HealthDisplay(float healthRate)
+        private void HealthDisplay(float healthRate)
         {
             _healthFilledImage.fillAmount = healthRate;
+        }
+        private void HealthBarOff()
+        {
+            gameObject.SetActive(false);
+        }
+        private void HealthBarOn()
+        {
+            gameObject.SetActive(true);
         }
 
         #endregion
