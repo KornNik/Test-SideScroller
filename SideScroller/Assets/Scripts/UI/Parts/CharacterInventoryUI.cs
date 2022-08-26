@@ -9,11 +9,10 @@ namespace SideScroller.UI.Parts
     {
         #region Fields
 
-        public static Action<ItemCell[]> InventoryUIEnabled;
-
         [SerializeField] private ScrollRect _itemsPlace;
+        [SerializeField] private ItemCell[] _itemsCellArray;
 
-        [SerializeField] private ItemCell[] _itemsCellList;
+        public static Action<CharacterInventoryUI> InventoryUIChecking;
 
         private int _emptyListCount;
 
@@ -36,14 +35,14 @@ namespace SideScroller.UI.Parts
 
         private void OnEnable()
         {
-            CharacterMenu.ItemShiftedInUIInventory += FillItemCellInUI;
-            CharacterMenu.ItemShiftedInUIEquipment += RemoveItemCellFromUI;
-            InventoryUIEnabled?.Invoke(_itemsCellList);
+            CharacterMenu.EquipmentItemSelected += FillItemCell;
+            CharacterMenu.InventoryItemSelected += ClearItemCell;
+
         }
         private void OnDisable()
         {
-            CharacterMenu.ItemShiftedInUIInventory -= FillItemCellInUI;
-            CharacterMenu.ItemShiftedInUIEquipment -= RemoveItemCellFromUI;
+            CharacterMenu.EquipmentItemSelected -= FillItemCell;
+            CharacterMenu.InventoryItemSelected -= ClearItemCell;
         }
 
         #endregion
@@ -53,34 +52,49 @@ namespace SideScroller.UI.Parts
 
         public void FillItemsArray(ItemCell[] itemCells)
         {
-            _itemsCellList = itemCells;
-            _emptyListCount = _itemsCellList.Length;
+            _itemsCellArray = itemCells;
+            _emptyListCount = _itemsCellArray.Length;
+        }
+        public void CheckInventoryUI(BaseItem[] items)
+        {
+            for (int i = 0; i < _itemsCellArray.Length; i++)
+            {
+                if (items[i] != null)
+                {
+                    _itemsCellArray[i].EmptyCell();
+                    _itemsCellArray[i].FillCellInfo(items[i]);
+                }
+                else if (items[i] == null && _itemsCellArray[i].Item != null)
+                {
+                    _itemsCellArray[i].EmptyCell();
+                }
+            }
         }
 
-        private void FillItemCellInUI(BaseItem item)
+        private void FillItemCell(BaseItem item)
         {
             if (_emptyListCount != 0)
             {
-                for (int i = 0; i < _itemsCellList.Length; i++)
+                for (int i = 0; i < _itemsCellArray.Length; i++)
                 {
-                    if (_itemsCellList[i].IsEmpty)
+                    if (_itemsCellArray[i].IsEmpty)
                     {
-                        _itemsCellList[i].FillCellInfo(item);
+                        _itemsCellArray[i].FillCellInfo(item);
                         _emptyListCount--;
                         return;
                     }
                 }
             }
         }
-        private void RemoveItemCellFromUI(BaseItem item)
+        private void ClearItemCell(BaseItem item)
         {
-            if (_emptyListCount != _itemsCellList.Length)
+            if (_emptyListCount != _itemsCellArray.Length)
             {
-                for (int i = 0; i < _itemsCellList.Length; i++)
+                for (int i = 0; i < _itemsCellArray.Length; i++)
                 {
-                    if(_itemsCellList[i].Item == item)
+                    if(_itemsCellArray[i].Item == item)
                     {
-                        _itemsCellList[i].EmptyCell();
+                        _itemsCellArray[i].EmptyCell();
                         _emptyListCount++;
                         return;
                     }

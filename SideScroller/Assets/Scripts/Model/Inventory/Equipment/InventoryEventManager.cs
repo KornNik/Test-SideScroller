@@ -1,7 +1,7 @@
 ﻿using System;
 using SideScroller.Model.Item;
 
-namespace SideScroller.Model.Inventory
+namespace SideScroller.Model.UnitInventory
 {
     class InventoryEventManager
     {

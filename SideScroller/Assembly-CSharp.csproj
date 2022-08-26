@@ -183,6 +183,7 @@
     <Compile Include="Assets\Scripts\Model\Item\DamagingItem\Arrow.cs" />
     <Compile Include="Assets\Scripts\Helpers\Types\NPCTypes.cs" />
     <Compile Include="Assets\Scripts\Model\Units\Animation\SwordsmanAnimation.cs" />
+    <Compile Include="Assets\Scripts\Model\Inventory\UnitBags.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

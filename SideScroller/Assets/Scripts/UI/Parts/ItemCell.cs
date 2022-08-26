@@ -80,7 +80,7 @@ namespace SideScroller.UI.Parts
         {
             if(_item is BaseItem)
             {
-                CharacterMenu.ItemShiftedInUIEquipment?.Invoke(_item);
+                CharacterMenu.InventoryItemSelected?.Invoke(_item);
             }
         }
 

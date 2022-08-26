@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - SideScroller.Controller.GameController
+    - SideScroller.Controller.LevelController
     - SideScroller.Controller.PlayerController
     - SideScroller.Data.Camera.CameraData
     - SideScroller.Data.Cell.ListPlayerCharacters
@@ -11,17 +12,21 @@ ScriptsOnlyBuild:
     - SideScroller.Data.Item.ProjectileParameters
     - SideScroller.Data.Item.WeaponParameters
     - SideScroller.Data.Level.LevelParameters
+    - SideScroller.Data.Level.LevelsBundle
     - SideScroller.Data.Parameter.Stat
     - SideScroller.Data.Unit.AI.AIParameters
     - SideScroller.Data.Unit.BaseCombatParameters
     - SideScroller.Data.Unit.BaseMovementParameters
     - SideScroller.Data.Unit.BaseNPCParameters
     - SideScroller.Data.Unit.BasePlayerParameters
+    - SideScroller.Helpers.SurfaceSlider
     - SideScroller.Model.CameraBeh.CameraBehaviour
     - SideScroller.Model.Item.Arrow
     - SideScroller.Model.Item.CommonMeeleWeapon
+    - SideScroller.Model.Item.CommonRangedWeapon
     - SideScroller.Model.Item.Enviroment
     - SideScroller.Model.LevelModel.Level
+    - SideScroller.Model.LevelModel.LevelTrigger
     - SideScroller.Model.Unit.AnimationUnit.BanditAnimation
     - SideScroller.Model.Unit.AnimationUnit.GunnerAnimation
     - SideScroller.Model.Unit.AnimationUnit.SwordsmanAnimation
@@ -35,6 +40,7 @@ ScriptsOnlyBuild:
     - SideScroller.UI.Parts.CharacterEquipmentUI
     - SideScroller.UI.Parts.CharacterInventoryUI
     - SideScroller.UI.Parts.ControlButton
+    - SideScroller.UI.Parts.HealthBar
     - SideScroller.UI.Parts.ItemCell
     - SideScroller.UI.Parts.SelectCharacterCell
     - SideScroller.UI.Parts.WeaponEquipmentCell
@@ -46,7 +52,14 @@ ScriptsOnlyBuild:
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
+    - UnityEditor.Tilemaps.GridPaintPaletteClipboard
+    - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
+    - UnityEditor.Tilemaps.PaintableSceneViewGrid
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -108,6 +121,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 624}
+    - Class: 114
       Script: {instanceID: 1456}
     - Class: 114
       Script: {instanceID: 1458}
@@ -115,6 +130,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 1460}
     - Class: 114
       Script: {instanceID: 1462}
+    - Class: 114
+      Script: {instanceID: 1464}
     - Class: 114
       Script: {instanceID: 1630}
     - Class: 114
@@ -136,79 +153,89 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2350}
     - Class: 114
-      Script: {instanceID: 2440}
+      Script: {instanceID: 2414}
     - Class: 114
-      Script: {instanceID: 2594}
+      Script: {instanceID: 2444}
     - Class: 114
-      Script: {instanceID: 2714}
+      Script: {instanceID: 2598}
     - Class: 114
-      Script: {instanceID: 2768}
+      Script: {instanceID: 2718}
     - Class: 114
-      Script: {instanceID: 2860}
+      Script: {instanceID: 2772}
     - Class: 114
-      Script: {instanceID: 3088}
+      Script: {instanceID: 2864}
     - Class: 114
-      Script: {instanceID: 3270}
+      Script: {instanceID: 3254}
     - Class: 114
-      Script: {instanceID: 3350}
+      Script: {instanceID: 3276}
     - Class: 114
-      Script: {instanceID: 3638}
+      Script: {instanceID: 3358}
     - Class: 114
-      Script: {instanceID: 3700}
+      Script: {instanceID: 3410}
     - Class: 114
-      Script: {instanceID: 3858}
+      Script: {instanceID: 3560}
     - Class: 114
-      Script: {instanceID: 3914}
+      Script: {instanceID: 3648}
     - Class: 114
-      Script: {instanceID: 3946}
+      Script: {instanceID: 3710}
     - Class: 114
-      Script: {instanceID: 3958}
+      Script: {instanceID: 3866}
     - Class: 114
-      Script: {instanceID: 4062}
+      Script: {instanceID: 3924}
     - Class: 114
-      Script: {instanceID: 4130}
+      Script: {instanceID: 3948}
     - Class: 114
-      Script: {instanceID: 4228}
+      Script: {instanceID: 3960}
     - Class: 114
-      Script: {instanceID: 4240}
+      Script: {instanceID: 3972}
     - Class: 114
-      Script: {instanceID: 4242}
+      Script: {instanceID: 4076}
     - Class: 114
-      Script: {instanceID: 4514}
+      Script: {instanceID: 4146}
     - Class: 114
-      Script: {instanceID: 4538}
+      Script: {instanceID: 4244}
     - Class: 114
-      Script: {instanceID: 4560}
+      Script: {instanceID: 4256}
     - Class: 114
-      Script: {instanceID: 4612}
+      Script: {instanceID: 4258}
     - Class: 114
-      Script: {instanceID: 4664}
+      Script: {instanceID: 4530}
     - Class: 114
-      Script: {instanceID: 4722}
+      Script: {instanceID: 4554}
     - Class: 114
-      Script: {instanceID: 4772}
+      Script: {instanceID: 4576}
     - Class: 114
-      Script: {instanceID: 4826}
+      Script: {instanceID: 4628}
     - Class: 114
-      Script: {instanceID: 5034}
+      Script: {instanceID: 4680}
     - Class: 114
-      Script: {instanceID: 5128}
+      Script: {instanceID: 4738}
     - Class: 114
-      Script: {instanceID: 5462}
+      Script: {instanceID: 4788}
     - Class: 114
-      Script: {instanceID: 5560}
+      Script: {instanceID: 4842}
     - Class: 114
-      Script: {instanceID: 5630}
+      Script: {instanceID: 4856}
     - Class: 114
-      Script: {instanceID: 5676}
+      Script: {instanceID: 5052}
     - Class: 114
-      Script: {instanceID: 5736}
+      Script: {instanceID: 5146}
     - Class: 114
-      Script: {instanceID: 5740}
+      Script: {instanceID: 5482}
     - Class: 114
-      Script: {instanceID: 5822}
+      Script: {instanceID: 5580}
     - Class: 114
-      Script: {instanceID: 5870}
+      Script: {instanceID: 5652}
+    - Class: 114
+      Script: {instanceID: 5698}
+    - Class: 114
+      Script: {instanceID: 5760}
+    - Class: 114
+      Script: {instanceID: 5764}
+    - Class: 114
+      Script: {instanceID: 5848}
+    - Class: 114
+      Script: {instanceID: 5896}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -228,6 +255,12 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 156049354
+      Script: {instanceID: 0}
+    - Class: 483693784
+      Script: {instanceID: 0}
+    - Class: 1839735485
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -254,6 +287,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: StandaloneInputModule
+  - hash:
+      serializedVersion: 2
+      Hash: ae83e830e7a90c0aff918c4c2e520825
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: GraphicRaycaster
   - hash:
       serializedVersion: 2
       Hash: 5ab533713adae59372fb3e10a585c186
@@ -370,7 +409,7 @@ ScriptsOnlyBuild:
     className: Stat
   - hash:
       serializedVersion: 2
-      Hash: ece6b12d89056552640ae461200b03ef
+      Hash: 39d1140a91bd536f4169ad3171fb654a
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Data.Level
     className: LevelParameters
@@ -412,13 +451,19 @@ ScriptsOnlyBuild:
     className: CinemachinePixelPerfect
   - hash:
       serializedVersion: 2
+      Hash: d11fd8a288333f04fad9a4171b5621ea
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: SideScroller.Data.Level
+    className: LevelsBundle
+  - hash:
+      serializedVersion: 2
       Hash: c1d728126ff1918728036c59106d32b2
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: a982627e944bf598a686e835c17219d0
+      Hash: 4ac700e6acf1cccb120e4e66acbc4aa6
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Model.Unit
     className: Gunner
@@ -442,7 +487,7 @@ ScriptsOnlyBuild:
     className: MainMenu
   - hash:
       serializedVersion: 2
-      Hash: a982627e944bf598a686e835c17219d0
+      Hash: 4ac700e6acf1cccb120e4e66acbc4aa6
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Model.Unit
     className: Swordsman
@@ -496,12 +541,6 @@ ScriptsOnlyBuild:
     className: TestRunCallbackListener
   - hash:
       serializedVersion: 2
-      Hash: ae83e830e7a90c0aff918c4c2e520825
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: GraphicRaycaster
-  - hash:
-      serializedVersion: 2
       Hash: f40fedccd4adbc76605bea6d67537e4b
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -532,6 +571,12 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: SideScroller.Helpers
+    className: SurfaceSlider
+  - hash:
+      serializedVersion: 2
       Hash: 334ac0cee0e25fa9058d8f9918732351
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Data.Item
@@ -556,6 +601,12 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
+      Hash: c47a13839b38024a2703b55e74e989b3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: SideScroller.Controller
+    className: LevelController
+  - hash:
+      serializedVersion: 2
       Hash: 8e6ceabfd38a184413d69b7db56c89cc
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
@@ -572,6 +623,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.SpriteShape.Runtime.dll
     namespaceName: UnityEngine.U2D
     className: SpriteShapeController
+  - hash:
+      serializedVersion: 2
+      Hash: aacb1716d34a4b7ece3d9c78f7470e69
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: SideScroller.Model.Item
+    className: CommonRangedWeapon
   - hash:
       serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
@@ -632,6 +689,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: BaseInput
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: SideScroller.Model.LevelModel
+    className: LevelTrigger
   - hash:
       serializedVersion: 2
       Hash: ef3b1c522f4d43fa94d02c861376f749
@@ -712,13 +775,13 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
-      Hash: 368b2042c28b9a2569f37fb7539eb29a
+      Hash: 7301d1fb90ffd675bcbcd5f27792eec0
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Model.Unit
     className: Bandit
   - hash:
       serializedVersion: 2
-      Hash: cb7e1cd52cca98449e37ccd7fc68c324
+      Hash: 37d8e38b87b249d6f6a4c6b87ddb466e
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Data.Unit
     className: BaseMovementParameters
@@ -760,7 +823,7 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: d9096506b33e72c53c1925577cf00ff8
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Controller
     className: GameController
@@ -796,7 +859,7 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
-      Hash: c9d6bfe62ddebf23afb7db3afaec97cb
+      Hash: 571e7e9e07ae99b3459595adef1ad66d
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Model.LevelModel
     className: Level
@@ -838,10 +901,16 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 3af67aa42e0dd438b6ad6c4af8e3918d
+      Hash: d4f7756cfbad139c5f8186a9cca121b5
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Data.Unit
     className: BasePlayerParameters
+  - hash:
+      serializedVersion: 2
+      Hash: 8eaa96ac099edf209dfbc711e0e3b7ab
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: SideScroller.UI.Parts
+    className: HealthBar
   - hash:
       serializedVersion: 2
       Hash: ef5c43f921427d03730f6ea4c848f07d
@@ -916,7 +985,7 @@ ScriptsOnlyBuild:
     className: BufferManager
   - hash:
       serializedVersion: 2
-      Hash: c74e9bd113dc3876d3a83a27588da9fc
+      Hash: ccbd73b526179b1af135bdc586de136d
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.UI
     className: GameMenu
@@ -934,7 +1003,7 @@ ScriptsOnlyBuild:
     className: CameraBehaviour
   - hash:
       serializedVersion: 2
-      Hash: 3af67aa42e0dd438b6ad6c4af8e3918d
+      Hash: d4f7756cfbad139c5f8186a9cca121b5
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Data.Unit
     className: BaseNPCParameters
@@ -970,7 +1039,7 @@ ScriptsOnlyBuild:
     className: FabrikSolver2D
   - hash:
       serializedVersion: 2
-      Hash: d7b624a2177811bc49dcbe52c8903b59
+      Hash: ed990a3a31de4f4cc624d8ce2eca1fdb
     assemblyName: Assembly-CSharp.dll
     namespaceName: SideScroller.Model.Item
     className: Arrow

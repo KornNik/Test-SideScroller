@@ -4,7 +4,7 @@ using SideScroller.Helpers;
 using SideScroller.Helpers.Managers;
 using SideScroller.Data.Unit;
 using SideScroller.Data.Inventory;
-using SideScroller.Model.Inventory;
+using SideScroller.Model.UnitInventory;
 using SideScroller.Model.Unit.Death;
 
 namespace SideScroller.Model.Unit
@@ -31,8 +31,7 @@ namespace SideScroller.Model.Unit
 
         protected BaseDeath _death;
         protected Health _unitHealth;
-        protected Equipment _equipment;
-        protected Inventory.Inventory _inventory;
+        protected UnitBags _unitBags;
         protected UnitBoolStates _unitBoolStates;
         protected MotionManager _motionManager;
         protected UnitEventManager _unitEventManager;
@@ -46,7 +45,6 @@ namespace SideScroller.Model.Unit
 
         #region Properties
 
-
         public Transform AttackArea => _attackArea;
         public SpriteRenderer UnitSprite => _unitSprite;
         public Collider2D UnitCollider => _unitCollider;
@@ -55,9 +53,8 @@ namespace SideScroller.Model.Unit
         public Collider2D GroundCheckCollider => _groundCheckCollider;
 
         public BaseDeath Death => _death;
+        public UnitBags UnitBags => _unitBags;
         public Health UnitHealth => _unitHealth;
-        public Equipment Equipment => _equipment;
-        public Inventory.Inventory Inventory => _inventory;
         public SurfaceSlider SurfaceSlider => _surfaceSlider;
         public UnitBoolStates UnitBoolStates => _unitBoolStates;
         public MotionManager MotionManager => _motionManager;
@@ -138,8 +135,7 @@ namespace SideScroller.Model.Unit
             _unitEventManager = new UnitEventManager();
 
             _death = new BaseDeath(this);
-            _equipment = new Equipment(this);
-            _inventory = new Inventory.Inventory(this);
+            _unitBags = new UnitBags(this);
             _unitHealth = new Health(Parameters);
         }
         private void OnHealthChaged(float health)

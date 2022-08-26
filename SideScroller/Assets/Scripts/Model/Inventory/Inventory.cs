@@ -1,18 +1,15 @@
-﻿using SideScroller.UI;
-using SideScroller.Helpers;
-using SideScroller.UI.Parts;
+﻿using SideScroller.UI.Parts;
 using SideScroller.Model.Item;
-using SideScroller.Model.Unit;
+using SideScroller.Data.Inventory;
 
-namespace SideScroller.Model.Inventory
+namespace SideScroller.Model.UnitInventory
 {
     class Inventory
     {
         #region Fields
 
-        private BaseUnit _unit;
-
         private BaseItem[] _itemsInBag;
+        private InventoryParameters _inventoryParameters;
 
         #endregion
 
@@ -26,23 +23,15 @@ namespace SideScroller.Model.Inventory
 
         #region ClassLifeCycle
 
-        public Inventory(BaseUnit unit)
+        public Inventory(InventoryParameters inventoryParameters)
         {
-            _unit = unit;
-            _itemsInBag = new BaseItem[_unit.InventoryParameters.InventorySize];
-
-            CharacterMenu.ItemShiftedInUIInventory += AddItemToInventory;
-            CharacterMenu.ItemShiftedInUIEquipment += SelectingItem;
-
-            CharacterInventoryUI.InventoryUIEnabled += CheckInventory;
+            _inventoryParameters = inventoryParameters;
+            _itemsInBag = new BaseItem[_inventoryParameters.InventorySize];
         }
 
         ~Inventory()
         {
-            CharacterMenu.ItemShiftedInUIInventory -= AddItemToInventory;
-            CharacterMenu.ItemShiftedInUIEquipment -= SelectingItem;
 
-            CharacterInventoryUI.InventoryUIEnabled -= CheckInventory;
         }
 
         #endregion
@@ -50,24 +39,23 @@ namespace SideScroller.Model.Inventory
 
         #region Methods
 
+        public void SendItemsToCheck(CharacterInventoryUI inventoryUI)
+        {
+            inventoryUI.CheckInventoryUI(_itemsInBag);
+        }
         public void AddItemToInventory(BaseItem item)
         {
             for (int i = 0; i < _itemsInBag.Length; i++)
             {
-                if (i == _itemsInBag.Length - 1 && _itemsInBag[i] != null)
-                {
-                    item.Drop();
-                }
                 if (_itemsInBag[i] == null)
                 {
                     _itemsInBag[i] = item;
-                    RenderVisibility.SpriteRenderVisibilityChange(item.transform, item.ItemSpriteRenderer, false);
-                    ColliderEnabler.ColliderEnabledChanger(item.transform, item.ItemCollider, false);
+                    item.ItemInBag();
                     return;
                 }
             }
         }
-        public void DeleteItemFromInventory(BaseItem item)
+        public void RemoveItemFromInventory(BaseItem item)
         {
             for (int i = 0; i < _itemsInBag.Length; i++)
             {
@@ -76,22 +64,6 @@ namespace SideScroller.Model.Inventory
                     _itemsInBag[i] = null;
                 }
             }
-        }
-
-        private void CheckInventory(ItemCell[] itemCells)
-        {
-            for (int i = 0; i < _itemsInBag.Length; i++)
-            {
-                if (_itemsInBag[i] != null)
-                {
-                    itemCells[i].FillCellInfo(_itemsInBag[i]);
-                }
-            }
-        }
-        private void SelectingItem(BaseItem item)
-        {
-            _unit.Equipment.Equip(item);
-            DeleteItemFromInventory(item);
         }
 
         #endregion

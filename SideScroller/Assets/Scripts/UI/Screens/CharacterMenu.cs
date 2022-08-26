@@ -11,8 +11,8 @@ namespace SideScroller.UI
 
         #region Fields
 
-        public static Action<BaseItem> ItemShiftedInUIInventory;
-        public static Action<BaseItem> ItemShiftedInUIEquipment;
+        public static Action<BaseItem> EquipmentItemSelected;
+        public static Action<BaseItem> InventoryItemSelected;
 
         [SerializeField] private CharacterEquipmentUI _equipmentUI;
         [SerializeField] private CharacterInventoryUI _inventoryUI;
@@ -34,6 +34,9 @@ namespace SideScroller.UI
         private void OnEnable()
         {
             _backToGameButton.onClick.AddListener(OnBackToGameButtonClick);
+
+            CharacterInventoryUI.InventoryUIChecking?.Invoke(_inventoryUI);
+            CharacterEquipmentUI.EquipmentUIChecking?.Invoke(_equipmentUI);
         }
 
         private void OnDisable()

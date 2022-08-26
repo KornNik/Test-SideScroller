@@ -85,7 +85,7 @@ namespace SideScroller.Model.Unit.AI
                 _patrolPoint = PatrolPoinGenerator.GeneratePoint(_unit.PatrolPoint, _AIParameters.PatrolDistance);
             }
             MoveToPoint(_patrolPoint);
-            if (IsAtStopingDistance(_patrolPoint, 0.8f))
+            if (IsAtStopingDistance(_patrolPoint, 1f))
             {
                 _patrolPoint = Vector3.zero;
             }
@@ -93,7 +93,7 @@ namespace SideScroller.Model.Unit.AI
         protected virtual void BackToPatrolArea()
         {
             MoveToPoint(_unit.PatrolPoint);
-            if (IsAtStopingDistance(_unit.PatrolPoint, 0.5f))
+            if (IsAtStopingDistance(_unit.PatrolPoint, 0.8f))
             {
                 _isOnPatrolArea = true;
                 _isPatrol = true;

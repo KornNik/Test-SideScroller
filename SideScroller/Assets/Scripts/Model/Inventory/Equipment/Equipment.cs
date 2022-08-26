@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using SideScroller.UI;
 using SideScroller.UI.Parts;
 using SideScroller.Model.Item;
-using SideScroller.Model.Unit;
 using SideScroller.Helpers.Types;
 using SideScroller.Helpers;
 
-namespace SideScroller.Model.Inventory
+namespace SideScroller.Model.UnitInventory
 {
     class Equipment
     {
@@ -14,7 +12,7 @@ namespace SideScroller.Model.Inventory
 
         private Weapon _weapon;
         private ArmorPlaces _armor;
-        private BaseUnit _unit;
+        private Transform _inventoryTransform;
 
         #endregion
 
@@ -29,21 +27,15 @@ namespace SideScroller.Model.Inventory
 
         #region ClassLifeCycle
 
-        public Equipment(BaseUnit unit)
+        public Equipment(Transform inventoryTransform)
         {
-            _unit = unit;
-            CharacterMenu.ItemShiftedInUIEquipment += Equip;
-            CharacterMenu.ItemShiftedInUIInventory += Unequip;
+            _inventoryTransform = inventoryTransform;
 
-            CharacterEquipmentUI.EquipmentEnabledUI += CheckEquipment;
         }
 
         ~Equipment()
         {
-            CharacterMenu.ItemShiftedInUIEquipment -= Equip;
-            CharacterMenu.ItemShiftedInUIInventory -= Unequip;
 
-            CharacterEquipmentUI.EquipmentEnabledUI -= CheckEquipment;
         }
 
         #endregion
@@ -51,6 +43,10 @@ namespace SideScroller.Model.Inventory
 
         #region Methods
 
+        public void SendEquipmentsToCheck(CharacterEquipmentUI equipmentUI)
+        {
+            equipmentUI.CheckEquipmentUI(_weapon, _armor);
+        }
         public void Equip(BaseItem item)
         {
             if (item is Weapon)
@@ -65,12 +61,23 @@ namespace SideScroller.Model.Inventory
             RenderVisibility.SpriteRenderVisibilityChange(item.transform,item.ItemSpriteRenderer,false);
             ColliderEnabler.ColliderEnabledChanger(item.transform, item.ItemCollider, false);
         }
+        public void Unequip(BaseItem item)
+        {
+            if (item is Weapon)
+            {
+                _weapon = null;
+            }
+            else if (item is CommonArmor)
+            {
+
+            }
+        }
 
         private void EquipWeapon(Weapon weapon)
         {
             Unequip(_weapon);
             _weapon = weapon;
-            _weapon.transform.parent = _unit.InventoryTransform;
+            _weapon.transform.parent = _inventoryTransform;
             _weapon.transform.localPosition = Vector3.zero;
             _weapon.transform.localRotation = Quaternion.identity;
         }
@@ -97,65 +104,6 @@ namespace SideScroller.Model.Inventory
                 default:
 
                     break;
-            }
-        }
-
-        private void Unequip(BaseItem item)
-        {
-            if(item is Weapon)
-            {
-                _weapon = null;
-            }
-            else if (item is CommonArmor)
-            {
-
-            }
-        }
-        private void CheckEquipment(WeaponEquipmentCell weaponEquipmentCell, ArmorEquipmentCell[] armorEquipmentCells)
-        {
-            if(_weapon != null)
-            {
-                weaponEquipmentCell.FillCellInfo(_weapon);
-            }
-            if (_armor.Body != null)
-            {
-                for (int i = 0; i < armorEquipmentCells.Length; i++)
-                {
-                    if (armorEquipmentCells[i].ArmorType == _armor.Body.ArmorType)
-                    {
-                        armorEquipmentCells[i].FillCellInfo(_armor.Body);
-                    }
-                }
-            }
-            if (_armor.Hands != null)
-            {
-                for (int i = 0; i < armorEquipmentCells.Length; i++)
-                {
-                    if (armorEquipmentCells[i].ArmorType == _armor.Hands.ArmorType)
-                    {
-                        armorEquipmentCells[i].FillCellInfo(_armor.Hands);
-                    }
-                }
-            }
-            if (_armor.Head != null)
-            {
-                for (int i = 0; i < armorEquipmentCells.Length; i++)
-                {
-                    if (armorEquipmentCells[i].ArmorType == _armor.Head.ArmorType)
-                    {
-                        armorEquipmentCells[i].FillCellInfo(_armor.Head);
-                    }
-                }
-            }
-            if (_armor.Legs != null)
-            {
-                for (int i = 0; i < armorEquipmentCells.Length; i++)
-                {
-                    if (armorEquipmentCells[i].ArmorType == _armor.Legs.ArmorType)
-                    {
-                        armorEquipmentCells[i].FillCellInfo(_armor.Legs);
-                    }
-                }
             }
         }
 

@@ -28,7 +28,7 @@ namespace SideScroller.Model.Item
             {
                 return _isInBag;
             }
-            set
+            protected set
             {
                 _isInBag = value;
                 if (_isInBag)
@@ -59,6 +59,12 @@ namespace SideScroller.Model.Item
         {
             transform.parent = null;
             IsInBag = false;
+            RenderVisibility.SpriteRenderVisibilityChange(transform, ItemSpriteRenderer, true);
+            ColliderEnabler.ColliderEnabledChanger(transform, ItemCollider, true);
+        }
+        public void ItemInBag()
+        {
+            IsInBag = true;
             RenderVisibility.SpriteRenderVisibilityChange(transform, ItemSpriteRenderer, false);
             ColliderEnabler.ColliderEnabledChanger(transform, ItemCollider, false);
         }
@@ -72,9 +78,8 @@ namespace SideScroller.Model.Item
         {
             if (!_isReadyToInteract) return;
 
-            interactUnit.Inventory.AddItemToInventory(this);
-            transform.parent = interactUnit.transform;
-            IsInBag = true;
+            interactUnit.UnitBags.Inventory.AddItemToInventory(this);
+            transform.parent = interactUnit.InventoryTransform;
         }
 
         #endregion

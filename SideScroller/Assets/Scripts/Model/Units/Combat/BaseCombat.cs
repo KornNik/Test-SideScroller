@@ -40,7 +40,7 @@ namespace SideScroller.Model.Unit.Combat
         public virtual void BegginAttack()
         {
             if (!_isReady) return;
-            if (!(_unitBehaviour.Equipment.Weapon is Weapon)) return;
+            if (!(_unitBehaviour.UnitBags.Equipment.Weapon is Weapon)) return;
 
             _unitBehaviour.UnitEventManager.Attack?.Invoke();
             _isReady = false;

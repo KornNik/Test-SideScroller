@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using SideScroller.UI;
 using SideScroller.Data.Level;
-using SideScroller.Helpers.Types;
 using SideScroller.Model.LevelModel;
 
 namespace SideScroller.Controller
@@ -10,8 +9,6 @@ namespace SideScroller.Controller
     {
         #region Fields
 
-        [SerializeField] private LevelTypes _levelType;
-        [SerializeField] private CameraTypes _cameraType;
         [SerializeField] private LevelsBundle _levelsBundle;
 
         private LevelLoader _levelLoader;

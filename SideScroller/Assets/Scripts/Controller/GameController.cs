@@ -20,6 +20,7 @@ namespace SideScroller.Controller
             Application.targetFrameRate = 60;
             QualitySettings.SetQualityLevel(0);
             ScreenInterface.GetInstance().Execute(ScreenTypes.MainMenu);
+            Screen.orientation = ScreenOrientation.Landscape;
         }
 
         #endregion

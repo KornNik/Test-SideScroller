@@ -2,6 +2,7 @@
 using UnityEngine;
 using SideScroller.Helpers.Types;
 using SideScroller.Model.Item;
+using SideScroller.Model.UnitInventory;
 
 namespace SideScroller.UI.Parts
 {
@@ -9,10 +10,10 @@ namespace SideScroller.UI.Parts
     {
         #region Fields
 
-        public static Action<WeaponEquipmentCell, ArmorEquipmentCell[]> EquipmentEnabledUI;
-
         [SerializeField] private WeaponEquipmentCell _weaponEquipmentCell;
         [SerializeField] private ArmorEquipmentCell[] _armorEquipmentCells;
+
+        public static Action<CharacterEquipmentUI> EquipmentUIChecking;
 
         #endregion
 
@@ -26,14 +27,13 @@ namespace SideScroller.UI.Parts
         }
         private void OnEnable()
         {
-            CharacterMenu.ItemShiftedInUIEquipment += AddEquipmentInUI;
-            CharacterMenu.ItemShiftedInUIInventory += RemoveEquipmentFromUI;
-            EquipmentEnabledUI?.Invoke(_weaponEquipmentCell,_armorEquipmentCells);
+            CharacterMenu.EquipmentItemSelected += ClearEquipmentCell;
+            CharacterMenu.InventoryItemSelected += FillEquipmentCell;
         }
         private void OnDisable()
         {
-            CharacterMenu.ItemShiftedInUIEquipment -= AddEquipmentInUI;
-            CharacterMenu.ItemShiftedInUIInventory -= RemoveEquipmentFromUI;
+            CharacterMenu.EquipmentItemSelected -= ClearEquipmentCell;
+            CharacterMenu.InventoryItemSelected -= FillEquipmentCell;
         }
 
         #endregion
@@ -41,47 +41,106 @@ namespace SideScroller.UI.Parts
 
         #region Methods
 
-        private void AddEquipmentInUI(BaseItem item)
+        public void CheckEquipmentUI(Weapon weapon, ArmorPlaces armors)
         {
-            if(item is Weapon)
+            var legsCell = FindArmorCellByType(ArmorTypes.Legs);
+            var headCell = FindArmorCellByType(ArmorTypes.Head);
+            var handsCell = FindArmorCellByType(ArmorTypes.Hands);
+            var bodyCell = FindArmorCellByType(ArmorTypes.Body);
+
+            if (weapon != null)
             {
-                AddWeaponCell(item as Weapon);
+                FillEquipmentCell(weapon);
+            }
+            else if (weapon == null && _weaponEquipmentCell != null)
+            {
+                _weaponEquipmentCell.EmptyCell();
+            }
+
+            if (armors.Legs != null)
+            {
+                FillEquipmentCell(armors.Legs);
+            }
+            else if (armors.Legs == null && legsCell.Item != null)
+            {
+                legsCell.FillCellInfo(armors.Legs);
+            }
+
+            if (armors.Head != null)
+            {
+                FillEquipmentCell(armors.Head);
+            }
+            else if (armors.Head == null && headCell.Item != null)
+            {
+                headCell.FillCellInfo(armors.Head);
+            }
+
+            if (armors.Hands != null)
+            {
+                FillEquipmentCell(armors.Hands);
+            }
+            else if (armors.Hands == null && handsCell.Item != null)
+            {
+                handsCell.FillCellInfo(armors.Hands);
+            }
+
+            if (armors.Body != null)
+            {
+                FillEquipmentCell(armors.Body);
+            }
+            else if (armors.Body == null && bodyCell.Item != null)
+            {
+                bodyCell.FillCellInfo(armors.Body);
+            }
+
+        }
+
+        private void FillEquipmentCell(BaseItem item)
+        {
+            if (item is Weapon)
+            {
+                FillWeaponCell(item as Weapon);
             }
             else if(item is CommonArmor)
             {
-                AddArmorCell(item as CommonArmor);
+                FillArmorCell(item as CommonArmor);
             }
         }
-        private void RemoveEquipmentFromUI(BaseItem item)
+        private void ClearEquipmentCell(BaseItem item)
         {
             if (item is CommonArmor)
             {
-                RemoveArmorCell(item as CommonArmor);
+                ClearArmorCell(item as CommonArmor);
             }
-            else
+            else if(item is Weapon)
             {
-                RemoveWeaponCell();
+                ClearWeaponCell();
             }
         }
-
-        private void RemoveWeaponCell()
-        {
-            _weaponEquipmentCell.EmptyCell();
-        }
-        private void RemoveArmorCell(CommonArmor armor)
-        {
-            FindArmorCellByType(armor.ArmorType).EmptyCell();
-        }
-
-        private void AddWeaponCell(Weapon weapon)
+        private void FillWeaponCell(Weapon weapon)
         {
             _weaponEquipmentCell.FillCellInfo(weapon);
         }
-        private void AddArmorCell(CommonArmor armor)
+        private void ClearWeaponCell()
         {
-            FindArmorCellByType(armor.ArmorType).FillCellInfo(armor);
+            _weaponEquipmentCell.EmptyCell();
         }
-
+        private void FillArmorCell(CommonArmor armor)
+        {
+            var armorCell = FindArmorCellByType(armor.ArmorType);
+            if (armorCell != null)
+            {
+                armorCell.FillCellInfo(armor);
+            }
+        }
+        private void ClearArmorCell(CommonArmor armor)
+        {
+            var armorCell = FindArmorCellByType(armor.ArmorType);
+            if (armorCell != null)
+            {
+                armorCell.EmptyCell();
+            }
+        }
         private ArmorEquipmentCell FindArmorCellByType(ArmorTypes armorType)
         {
             for (int i = 0; i < _armorEquipmentCells.Length; i++)

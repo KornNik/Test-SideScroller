@@ -1,6 +1,6 @@
 ﻿using SideScroller.Model.Item;
 
-namespace SideScroller.Model.Inventory
+namespace SideScroller.Model.UnitInventory
 {
     struct ArmorPlaces
     {

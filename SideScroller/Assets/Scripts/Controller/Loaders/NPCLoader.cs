@@ -28,7 +28,7 @@ namespace SideScroller.Controller
             var weaponResources = CustomResources.Load<Weapon>(WeaponsAssetPath.WeaponsPath[_weaponType]);
             var weapon = Object.Instantiate(weaponResources, Vector3.zero, Quaternion.identity, NPC.transform);
 
-            NPC.Equipment.Equip(weapon);
+            NPC.UnitBags.Equipment.Equip(weapon);
 
             return NPC;
         }

@@ -24,9 +24,9 @@ namespace SideScroller.Model.Unit.Combat
         public override void AttackOnEventAnimation()
         {
             base.AttackOnEventAnimation();
-            if(_unitBehaviour.Equipment.Weapon is CommonRangedWeapon)
+            if(_unitBehaviour.UnitBags.Equipment.Weapon is CommonRangedWeapon)
             {
-                _unitBehaviour.Equipment.Weapon.WeaponAttack();
+                _unitBehaviour.UnitBags.Equipment.Weapon.WeaponAttack();
             }
         }
         public override void Protect()

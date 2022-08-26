@@ -35,7 +35,7 @@ namespace SideScroller.Model.Unit.Combat
                 var victim = _damagingObjects[i].GetComponent<IDamageable>();
                 if (victim != null)
                 {
-                    _unitBehaviour.Equipment.Weapon.InflictDamage(victim);
+                    _unitBehaviour.UnitBags.Equipment.Weapon.InflictDamage(victim);
                 }
             }
         }
